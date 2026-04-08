@@ -99,7 +99,7 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
           <div className="flex items-center gap-2 min-w-0">
             <button
               onClick={onOpenSidebar}
-              className="md:hidden flex-shrink-0 p-1.5 -ml-1 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
+              className="md:hidden flex-shrink-0 p-1.5 -ml-1 rounded-md text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
             >
               <IconMenu2 size={20} />
             </button>
@@ -120,14 +120,14 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
           <div className="flex gap-2 flex-shrink-0">
             <button
               onClick={() => setShowCopy(true)}
-              className="flex items-center gap-1.5 px-3 md:px-3.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer"
+              className="flex items-center gap-1.5 px-3 md:px-3.5 py-2 rounded-md border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer"
             >
               <IconCopy size={14} />
               <span className="hidden sm:inline">Copy to month</span>
             </button>
             <button
               onClick={() => setConfirmDel(true)}
-              className="flex items-center gap-1.5 px-3 md:px-3.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-red-50 hover:text-red-700 hover:border-red-200 bg-transparent cursor-pointer"
+              className="flex items-center gap-1.5 px-3 md:px-3.5 py-2 rounded-md border border-neutral-200 text-xs text-neutral-500 hover:bg-red-50 hover:text-red-700 hover:border-red-200 bg-transparent cursor-pointer"
             >
               <IconTrash size={14} />
               <span className="hidden sm:inline">Delete month</span>
@@ -175,7 +175,7 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
       {/* Tables — desktop: fixed split layout; mobile: scrollable */}
       <div className="flex-1 min-h-0 flex flex-col gap-3 p-4 md:px-6 overflow-y-auto md:overflow-hidden">
         {/* Income */}
-        <div className="flex flex-col min-h-0 flex-shrink-0 md:max-h-[35%] bg-white rounded-xl border border-neutral-200 overflow-hidden">
+        <div className="flex flex-col min-h-0 flex-shrink-0 md:max-h-[35%] bg-white rounded-md border border-neutral-200 overflow-hidden">
           <TableHeader
             section="income"
             entries={data.income}
@@ -195,7 +195,7 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
         </div>
 
         {/* Expenses */}
-        <div className="flex flex-col min-h-0 md:flex-1 bg-white rounded-xl border border-neutral-200 overflow-hidden">
+        <div className="flex flex-col min-h-0 md:flex-1 bg-white rounded-md border border-neutral-200 overflow-hidden">
           <TableHeader
             section="expenses"
             entries={data.expenses}
@@ -216,7 +216,7 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
 
         {/* Spending rate */}
         {totalIncome > 0 && (
-          <div className="flex-shrink-0 bg-white rounded-xl border border-neutral-200 px-5 py-4">
+          <div className="flex-shrink-0 bg-white rounded-md border border-neutral-200 px-5 py-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs text-neutral-500">Spending rate</span>
               <span
@@ -248,7 +248,7 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
 
       {confirmDel && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-5">
-          <div className="bg-white rounded-xl border border-neutral-200 max-w-sm w-full p-5">
+          <div className="bg-white rounded-md border border-neutral-200 max-w-sm w-full p-5">
             <p className="text-sm font-medium mb-1">Delete {MONTHS[month - 1]}?</p>
             <p className="text-sm text-neutral-500 mb-4">
               All entries will be permanently removed.
@@ -256,13 +256,13 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setConfirmDel(false)}
-                className="px-4 py-2 rounded-lg border border-neutral-200 text-sm hover:bg-neutral-50 bg-transparent cursor-pointer"
+                className="px-4 py-2 rounded-md border border-neutral-200 text-sm hover:bg-neutral-50 bg-transparent cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteMonth}
-                className="px-4 py-2 rounded-lg bg-red-50 text-red-700 text-sm hover:bg-red-100 border-none cursor-pointer"
+                className="px-4 py-2 rounded-md bg-red-50 text-red-700 text-sm hover:bg-red-100 border-none cursor-pointer"
               >
                 Delete
               </button>
@@ -273,7 +273,7 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
 
       {showCopy && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-5">
-          <div className="bg-white rounded-xl border border-neutral-200 max-w-sm w-full p-5">
+          <div className="bg-white rounded-md border border-neutral-200 max-w-sm w-full p-5">
             <p className="text-sm font-medium mb-1">Copy to another month</p>
             <p className="text-sm text-neutral-500 mb-4">
               All entries copied. Status resets to unpaid.
@@ -287,7 +287,7 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
                   type="number"
                   value={copyTarget.year}
                   onChange={(e) => setCopyTarget((t) => ({ ...t, year: Number(e.target.value) }))}
-                  className="px-3 py-2 rounded-lg border border-neutral-200 text-sm outline-none w-full"
+                  className="px-3 py-2 rounded-md border border-neutral-200 text-sm outline-none w-full"
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -297,7 +297,7 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
                 <select
                   value={copyTarget.month}
                   onChange={(e) => setCopyTarget((t) => ({ ...t, month: Number(e.target.value) }))}
-                  className="px-3 py-2 rounded-lg border border-neutral-200 text-sm outline-none bg-white w-full"
+                  className="px-3 py-2 rounded-md border border-neutral-200 text-sm outline-none bg-white w-full"
                 >
                   {MONTHS.map((n, i) => (
                     <option key={i} value={i + 1}>
@@ -310,13 +310,13 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowCopy(false)}
-                className="px-4 py-2 rounded-lg border border-neutral-200 text-sm hover:bg-neutral-50 bg-transparent cursor-pointer"
+                className="px-4 py-2 rounded-md border border-neutral-200 text-sm hover:bg-neutral-50 bg-transparent cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCopy}
-                className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
+                className="px-4 py-2 rounded-md bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
               >
                 Copy
               </button>

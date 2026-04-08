@@ -41,8 +41,7 @@ export function DayPickerInput({
 
       // Prefer opening below; fall back to above if not enough room
       const spaceBelow = vh - r.bottom;
-      const top =
-        spaceBelow >= POPOVER_H + 8 ? r.bottom + 4 : Math.max(8, r.top - POPOVER_H - 4);
+      const top = spaceBelow >= POPOVER_H + 8 ? r.bottom + 4 : Math.max(8, r.top - POPOVER_H - 4);
 
       setPos({ top, left });
     }
@@ -73,7 +72,7 @@ export function DayPickerInput({
         onClick={handleOpen}
         className={
           className ??
-          "flex-1 min-w-0 px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm outline-none cursor-pointer"
+          "flex-1 min-w-0 px-3 py-2 rounded-md border border-neutral-200 bg-white text-sm outline-none cursor-pointer"
         }
       />
       {open &&
@@ -81,7 +80,7 @@ export function DayPickerInput({
           <div
             ref={popoverRef}
             style={{ position: "fixed", top: pos.top, left: pos.left, zIndex: 9999 }}
-            className="bg-white border border-neutral-200 rounded-xl shadow-lg p-3 w-[230px]"
+            className="bg-white border border-neutral-200 rounded-md shadow-lg p-3 w-[230px]"
           >
             <DayPicker
               mode="single"

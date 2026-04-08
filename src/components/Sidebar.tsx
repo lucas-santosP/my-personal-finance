@@ -109,7 +109,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
       <div className="px-2 pt-3 pb-1">
         <button
           onClick={() => navigate({ page: "dashboard" })}
-          className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-left transition-colors border-none cursor-pointer ${
+          className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-left transition-colors border-none cursor-pointer ${
             view.page === "dashboard"
               ? "bg-neutral-100 text-neutral-900 font-medium"
               : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 bg-transparent"
@@ -150,7 +150,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
       <div className="border-t border-neutral-200 p-2.5 flex flex-col gap-1.5">
         <button
           onClick={handleAdd}
-          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-600 hover:bg-neutral-50 transition-colors bg-transparent cursor-pointer"
+          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-md border border-neutral-200 text-xs text-neutral-600 hover:bg-neutral-50 transition-colors bg-transparent cursor-pointer"
         >
           <IconPlus size={14} />
           New month
@@ -158,14 +158,14 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
         <div className="flex gap-1.5">
           <button
             onClick={() => exportJSON(months)}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
           >
             <IconDownload size={14} />
             Export
           </button>
           <button
             onClick={() => importJSON(setMonths)}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
           >
             <IconUpload size={14} />
             Import

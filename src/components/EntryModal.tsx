@@ -75,7 +75,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
-        className="bg-white rounded-t-2xl md:rounded-xl border border-neutral-200 w-full md:max-w-md flex flex-col"
+        className="bg-white rounded-t-2xl md:rounded-md border border-neutral-200 w-full md:max-w-md flex flex-col"
         style={{ maxHeight: "92dvh", overflowY: "auto" }}
       >
         {/* Drag handle (mobile only) */}
@@ -107,7 +107,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
                 if (errors.description) setErrors((p) => ({ ...p, description: undefined }));
               }}
               placeholder="e.g. Salary, Rent, Netflix…"
-              className={`w-full px-3 py-2 rounded-lg border text-sm outline-none ${errors.description ? "border-red-300 bg-red-50" : "border-neutral-200 bg-white"}`}
+              className={`w-full px-3 py-2 rounded-md border text-sm outline-none ${errors.description ? "border-red-300 bg-red-50" : "border-neutral-200 bg-white"}`}
             />
             {errors.description && (
               <span className="text-xs text-red-600">{errors.description}</span>
@@ -129,7 +129,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
                   if (errors.value) setErrors((p) => ({ ...p, value: undefined }));
                 }}
                 placeholder="0.00"
-                className={`w-full px-3 py-2 rounded-lg border text-sm outline-none ${errors.value ? "border-red-300 bg-red-50" : "border-neutral-200 bg-white"}`}
+                className={`w-full px-3 py-2 rounded-md border text-sm outline-none ${errors.value ? "border-red-300 bg-red-50" : "border-neutral-200 bg-white"}`}
               />
               {errors.value && <span className="text-xs text-red-600">{errors.value}</span>}
             </div>
@@ -143,12 +143,12 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
                   month={month}
                   value={selectedDay}
                   onChange={(d) => set("dueDay", d ? String(d) : "")}
-                  className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm outline-none cursor-pointer"
+                  className="flex-1 min-w-0 px-3 py-2 rounded-md border border-neutral-200 bg-white text-sm outline-none cursor-pointer"
                 />
                 {form.dueDay && (
                   <button
                     onClick={() => set("dueDay", "")}
-                    className="px-2.5 py-2 rounded-lg border border-neutral-200 text-neutral-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 bg-transparent cursor-pointer transition-colors"
+                    className="px-2.5 py-2 rounded-md border border-neutral-200 text-neutral-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 bg-transparent cursor-pointer transition-colors"
                   >
                     <IconX size={13} />
                   </button>
@@ -165,7 +165,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               <select
                 value={form.category}
                 onChange={(e) => set("category", e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm outline-none"
+                className="w-full px-3 py-2 rounded-md border border-neutral-200 bg-white text-sm outline-none"
               >
                 {cats.map((c) => (
                   <option key={c}>{c}</option>
@@ -181,7 +181,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
                   <button
                     key={t}
                     onClick={() => set("kind", t)}
-                    className={`flex-1 py-2 rounded-lg text-xs border cursor-pointer transition-colors ${
+                    className={`flex-1 py-2 rounded-md text-xs border cursor-pointer transition-colors ${
                       form.kind === t
                         ? t === "PF"
                           ? "bg-blue-50 text-blue-800 border-blue-200"
@@ -204,7 +204,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               value={form.note}
               onChange={(e) => set("note", e.target.value)}
               placeholder="Any extra detail…"
-              className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm outline-none"
+              className="w-full px-3 py-2 rounded-md border border-neutral-200 bg-white text-sm outline-none"
             />
           </div>
 
@@ -229,13 +229,13 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
           <div className="flex justify-end gap-2 pt-1 pb-safe">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 bg-transparent cursor-pointer"
+              className="px-4 py-2 rounded-md border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 bg-transparent cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
+              className="px-4 py-2 rounded-md bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
             >
               {isEdit ? "Save changes" : "Add"}
             </button>

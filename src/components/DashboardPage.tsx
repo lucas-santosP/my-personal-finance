@@ -14,7 +14,7 @@ interface TipProps {
 function Tip({ active, payload, label }: TipProps) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-neutral-200 rounded-lg px-3 py-2 text-xs">
+    <div className="bg-white border border-neutral-200 rounded-md px-3 py-2 text-xs">
       <p className="font-medium mb-1">{label}</p>
       {payload.map((p) => (
         <p key={p.name} style={{ color: p.color }}>
@@ -71,7 +71,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenSidebar}
-            className="md:hidden p-1.5 -ml-1 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
+            className="md:hidden p-1.5 -ml-1 rounded-md text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
           >
             <IconMenu2 size={20} />
           </button>
@@ -86,7 +86,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
 
       <div className="flex-1 overflow-y-auto px-4 md:px-6 py-5 flex flex-col gap-4">
         {years.length === 0 ? (
-          <div className="bg-white rounded-xl border border-neutral-200 p-12 text-center text-neutral-400 text-sm">
+          <div className="bg-white rounded-md border border-neutral-200 p-12 text-center text-neutral-400 text-sm">
             No data yet. Add a month from the sidebar to get started.
           </div>
         ) : (
@@ -103,7 +103,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
                 },
                 { label: "Months tracked", value: yearStats.months, cls: "text-neutral-800" },
               ].map((s, i) => (
-                <div key={i} className="bg-white rounded-xl border border-neutral-200 px-4 py-3.5">
+                <div key={i} className="bg-white rounded-md border border-neutral-200 px-4 py-3.5">
                   <p className="text-xs text-neutral-400 mb-1.5">{s.label}</p>
                   <p className={`text-lg font-medium ${s.cls}`}>{s.value}</p>
                 </div>
@@ -112,7 +112,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
 
             {/* Chart */}
             {chartData.length > 0 && (
-              <div className="bg-white rounded-xl border border-neutral-200 px-5 pt-4 pb-3">
+              <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-3">
                 <p className="text-xs font-medium text-neutral-500 mb-3">
                   Monthly income vs expenses — {currentYear}
                 </p>
@@ -141,7 +141,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
 
             {/* Bottom panels — 1 col on mobile, 2 on md+ */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-xl border border-neutral-200 px-5 pt-4 pb-4">
+              <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-4">
                 <p className="text-xs font-medium text-neutral-500 mb-3">
                   Expenses by category — {currentYear}
                 </p>
@@ -162,7 +162,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
                   ))
                 )}
               </div>
-              <div className="bg-white rounded-xl border border-neutral-200 px-5 pt-4 pb-2">
+              <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-2">
                 <p className="text-xs font-medium text-neutral-500 mb-3">
                   Monthly summary — {currentYear}
                 </p>
