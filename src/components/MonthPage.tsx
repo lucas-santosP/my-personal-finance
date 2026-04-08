@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconCopy, IconTrash } from "@tabler/icons-react";
 import { MONTHS } from "../constants";
 import { calcMonth, emptyMonth, mkId, monthKey } from "../utils/finance";
 import { saveData } from "../utils/storage";
@@ -109,15 +110,17 @@ export function MonthPage({ year, month, months, setMonths, setView }: Props) {
           <div className="flex gap-2">
             <button
               onClick={() => setShowCopy(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer"
             >
-              ⎘ Copy to month
+              <IconCopy size={14} />
+              Copy to month
             </button>
             <button
               onClick={() => setConfirmDel(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-red-50 hover:text-red-700 hover:border-red-200 bg-transparent cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-red-50 hover:text-red-700 hover:border-red-200 bg-transparent cursor-pointer"
             >
-              ✕ Delete month
+              <IconTrash size={14} />
+              Delete month
             </button>
           </div>
         </div>
@@ -250,13 +253,13 @@ export function MonthPage({ year, month, months, setMonths, setView }: Props) {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setConfirmDel(false)}
-                className="px-4 py-1.5 rounded-lg border border-neutral-200 text-sm hover:bg-neutral-50 bg-transparent cursor-pointer"
+                className="px-4 py-2 rounded-lg border border-neutral-200 text-sm hover:bg-neutral-50 bg-transparent cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteMonth}
-                className="px-4 py-1.5 rounded-lg bg-red-50 text-red-700 text-sm hover:bg-red-100 border-none cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-red-50 text-red-700 text-sm hover:bg-red-100 border-none cursor-pointer"
               >
                 Delete
               </button>
@@ -304,13 +307,13 @@ export function MonthPage({ year, month, months, setMonths, setView }: Props) {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowCopy(false)}
-                className="px-4 py-1.5 rounded-lg border border-neutral-200 text-sm hover:bg-neutral-50 bg-transparent cursor-pointer"
+                className="px-4 py-2 rounded-lg border border-neutral-200 text-sm hover:bg-neutral-50 bg-transparent cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCopy}
-                className="px-4 py-1.5 rounded-lg bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
               >
                 Copy
               </button>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 import { INCOME_CATS, EXPENSE_CATS } from "../constants";
 import { DayPickerInput } from "./DayPickerInput";
 import type { Entry, Section } from "../types";
@@ -83,9 +84,9 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
           </p>
           <button
             onClick={onClose}
-            className="text-neutral-400 hover:text-neutral-700 text-base leading-none px-1 bg-transparent border-none cursor-pointer"
+            className="text-neutral-400 hover:text-neutral-700 p-1 bg-transparent border-none cursor-pointer"
           >
-            ✕
+            <IconX size={16} />
           </button>
         </div>
         <div className="p-5 flex flex-col gap-3.5">
@@ -140,9 +141,9 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
                 {form.dueDay && (
                   <button
                     onClick={() => set("dueDay", "")}
-                    className="px-2 py-1.5 rounded-lg border border-neutral-200 text-xs text-neutral-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 bg-transparent cursor-pointer transition-colors"
+                    className="px-2.5 py-2 rounded-lg border border-neutral-200 text-neutral-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 bg-transparent cursor-pointer transition-colors"
                   >
-                    ✕
+                    <IconX size={13} />
                   </button>
                 )}
               </div>
@@ -172,7 +173,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
                   <button
                     key={t}
                     onClick={() => set("kind", t)}
-                    className={`flex-1 py-1.5 rounded-lg text-xs border cursor-pointer transition-colors ${
+                    className={`flex-1 py-2 rounded-lg text-xs border cursor-pointer transition-colors ${
                       form.kind === t
                         ? t === "PF"
                           ? "bg-blue-50 text-blue-800 border-blue-200"
@@ -202,11 +203,13 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
             onClick={() => set("paid", !form.paid)}
           >
             <div
-              className={`w-8 h-4 rounded-full relative transition-colors ${form.paid ? "bg-green-600" : "bg-neutral-200"}`}
+              className={`w-6 h-6 rounded-md inline-flex items-center justify-center border transition-colors ${
+                form.paid
+                  ? "bg-green-100 border-green-300 text-green-700"
+                  : "bg-red-50 border-red-200 text-red-300"
+              }`}
             >
-              <div
-                className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-transform ${form.paid ? "translate-x-4" : "translate-x-0.5"}`}
-              />
+              <IconCheck size={12} style={{ opacity: form.paid ? 1 : 0 }} />
             </div>
             <span className="text-sm text-neutral-600">
               Mark as {section === "income" ? "received" : "paid"}
@@ -215,13 +218,13 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
           <div className="flex justify-end gap-2 pt-1">
             <button
               onClick={onClose}
-              className="px-4 py-1.5 rounded-lg border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 bg-transparent cursor-pointer"
+              className="px-4 py-2 rounded-lg border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 bg-transparent cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="px-4 py-1.5 rounded-lg bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
+              className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
             >
               {isEdit ? "Save changes" : "Add"}
             </button>

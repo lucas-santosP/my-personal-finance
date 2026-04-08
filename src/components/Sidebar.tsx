@@ -1,4 +1,12 @@
 import { useState } from "react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconDownload,
+  IconLayoutDashboard,
+  IconPlus,
+  IconUpload,
+} from "@tabler/icons-react";
 import { MONTHS } from "../constants";
 import { calcMonth, getYears, getMonthsForYear, monthKey } from "../utils/finance";
 import { exportJSON, importJSON } from "../utils/io";
@@ -45,9 +53,9 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
         <div className="flex items-center gap-1 mt-1.5">
           <button
             onClick={() => setViewYear((y) => y - 1)}
-            className="px-1 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 text-sm bg-transparent border-none cursor-pointer"
+            className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
           >
-            ‹
+            <IconChevronLeft size={16} />
           </button>
           <span
             className="text-xs text-neutral-500 font-medium text-center"
@@ -57,9 +65,9 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
           </span>
           <button
             onClick={() => setViewYear((y) => y + 1)}
-            className="px-1 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 text-sm bg-transparent border-none cursor-pointer"
+            className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
           >
-            ›
+            <IconChevronRight size={16} />
           </button>
           {!years.includes(viewYear) && (
             <button
@@ -67,10 +75,11 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
                 onAddMonth(viewYear, 1);
                 setView({ page: "month", year: viewYear, month: 1 });
               }}
-              className="ml-1 text-neutral-400 hover:text-neutral-700 border border-neutral-200 rounded px-1.5 py-0.5 bg-transparent cursor-pointer"
+              className="ml-1 flex items-center gap-0.5 text-neutral-400 hover:text-neutral-700 border border-neutral-200 rounded px-1.5 py-1 bg-transparent cursor-pointer"
               style={{ fontSize: "10px" }}
             >
-              + year
+              <IconPlus size={10} />
+              year
             </button>
           )}
         </div>
@@ -78,13 +87,14 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
       <div className="px-2 pt-3 pb-1">
         <button
           onClick={() => setView({ page: "dashboard" })}
-          className={`flex items-center gap-2 w-full px-3 py-1.5 rounded-lg text-sm text-left transition-colors border-none cursor-pointer ${
+          className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-left transition-colors border-none cursor-pointer ${
             view.page === "dashboard"
               ? "bg-neutral-100 text-neutral-900 font-medium"
               : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 bg-transparent"
           }`}
         >
-          ▦ Dashboard
+          <IconLayoutDashboard size={16} />
+          Dashboard
         </button>
       </div>
       <p
@@ -103,7 +113,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
             <button
               key={m}
               onClick={() => setView({ page: "month", year: viewYear, month: m })}
-              className={`flex items-center justify-between w-full px-4 py-1.5 text-sm text-left transition-colors border-none cursor-pointer ${
+              className={`flex items-center justify-between w-full px-4 py-2 text-sm text-left transition-colors border-none cursor-pointer ${
                 active
                   ? "bg-neutral-100 text-neutral-900 font-medium"
                   : "text-neutral-500 hover:bg-neutral-50 hover:text-neutral-800 bg-transparent"
@@ -118,22 +128,25 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
       <div className="border-t border-neutral-200 p-2.5 flex flex-col gap-1.5">
         <button
           onClick={handleAdd}
-          className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg border border-neutral-200 text-xs text-neutral-600 hover:bg-neutral-50 transition-colors bg-transparent cursor-pointer"
+          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-600 hover:bg-neutral-50 transition-colors bg-transparent cursor-pointer"
         >
-          + New month
+          <IconPlus size={14} />
+          New month
         </button>
         <div className="flex gap-1.5">
           <button
             onClick={() => exportJSON(months)}
-            className="flex-1 py-1.5 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
           >
-            ↓ Export
+            <IconDownload size={14} />
+            Export
           </button>
           <button
             onClick={() => importJSON(setMonths)}
-            className="flex-1 py-1.5 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
           >
-            ↑ Import
+            <IconUpload size={14} />
+            Import
           </button>
         </div>
       </div>
