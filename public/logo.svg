@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="112" fill="#171717"/>
+
+  <!-- Ascending bars -->
+  <rect x="96"  y="308" width="82" height="134" rx="16" fill="#14532d"/>
+  <rect x="215" y="228" width="82" height="214" rx="16" fill="#166534"/>
+  <rect x="334" y="148" width="82" height="294" rx="16" fill="#22c55e"/>
+
+  <!-- Trend line connecting bar tops -->
+  <polyline
+    points="137,298 256,218 375,138"
+    fill="none"
+    stroke="white"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.35"
+  />
+
+  <!-- Dots at bar tops -->
+  <circle cx="137" cy="298" r="12" fill="white" opacity="0.55"/>
+  <circle cx="256" cy="218" r="12" fill="white" opacity="0.75"/>
+  <circle cx="375" cy="138" r="15" fill="white"/>
+</svg>

@@ -7,6 +7,7 @@ import {
   IconPlus,
   IconUpload,
 } from "@tabler/icons-react";
+import { LogoMark } from "./LogoMark";
 import { MONTHS } from "../constants";
 import { calcMonth, getYears, getMonthsForYear, monthKey } from "../utils/finance";
 import { exportJSON, importJSON } from "../utils/io";
@@ -48,27 +49,13 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
 
   return (
     <aside className="flex-shrink-0 flex flex-col bg-white border-r border-neutral-200 overflow-hidden w-72">
-      <div className="px-4 py-4 border-b border-neutral-200">
-        <p className="text-sm font-medium">Finances</p>
+      <div className="flex justify-between px-4 py-4 border-b border-neutral-200">
+        <div className="flex items-center gap-2 mb-0.5">
+          <LogoMark size={32} />
+          <p className="text-sm font-semibold tracking-tight">My Finances</p>
+        </div>
+
         <div className="flex items-center gap-1 mt-1.5">
-          <button
-            onClick={() => setViewYear((y) => y - 1)}
-            className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
-          >
-            <IconChevronLeft size={16} />
-          </button>
-          <span
-            className="text-xs text-neutral-500 font-medium text-center"
-            style={{ minWidth: "32px" }}
-          >
-            {viewYear}
-          </span>
-          <button
-            onClick={() => setViewYear((y) => y + 1)}
-            className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
-          >
-            <IconChevronRight size={16} />
-          </button>
           {!years.includes(viewYear) && (
             <button
               onClick={() => {
@@ -82,8 +69,29 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
               year
             </button>
           )}
+
+          <button
+            onClick={() => setViewYear((y) => y - 1)}
+            className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
+          >
+            <IconChevronLeft size={16} />
+          </button>
+
+          <span
+            className="text-xs text-neutral-500 font-medium text-center"
+            style={{ minWidth: "32px" }}
+          >
+            {viewYear}
+          </span>
+          <button
+            onClick={() => setViewYear((y) => y + 1)}
+            className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
+          >
+            <IconChevronRight size={16} />
+          </button>
         </div>
       </div>
+
       <div className="px-2 pt-3 pb-1">
         <button
           onClick={() => setView({ page: "dashboard" })}
