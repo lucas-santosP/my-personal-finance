@@ -71,13 +71,18 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
 
   return (
     <div
-      className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-5"
+      className="fixed inset-0 bg-black/30 flex items-end md:items-center justify-center z-50 md:p-5"
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
-        className="bg-white rounded-xl border border-neutral-200 w-full max-w-md flex flex-col"
-        style={{ maxHeight: "90vh", overflowY: "auto" }}
+        className="bg-white rounded-t-2xl md:rounded-xl border border-neutral-200 w-full md:max-w-md flex flex-col"
+        style={{ maxHeight: "92dvh", overflowY: "auto" }}
       >
+        {/* Drag handle (mobile only) */}
+        <div className="md:hidden flex justify-center pt-3 pb-1 flex-shrink-0">
+          <div className="w-8 h-1 rounded-full bg-neutral-300" />
+        </div>
+
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-200 flex-shrink-0">
           <p className="text-sm font-medium">
             {isEdit ? "Edit" : "Add"} {section === "income" ? "income" : "expense"}
@@ -89,6 +94,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
             <IconX size={16} />
           </button>
         </div>
+
         <div className="p-5 flex flex-col gap-3.5">
           <div className="flex flex-col gap-1">
             <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
@@ -107,6 +113,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               <span className="text-xs text-red-600">{errors.description}</span>
             )}
           </div>
+
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
@@ -149,6 +156,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               </div>
             </div>
           </div>
+
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
@@ -187,6 +195,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               </div>
             </div>
           </div>
+
           <div className="flex flex-col gap-1">
             <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
               Note <span className="normal-case font-normal">(optional)</span>
@@ -198,6 +207,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               className="w-full px-3 py-2 rounded-lg border border-neutral-200 bg-white text-sm outline-none"
             />
           </div>
+
           <div
             className="flex items-center gap-2.5 cursor-pointer select-none"
             onClick={() => set("paid", !form.paid)}
@@ -215,7 +225,8 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               Mark as {section === "income" ? "received" : "paid"}
             </span>
           </div>
-          <div className="flex justify-end gap-2 pt-1">
+
+          <div className="flex justify-end gap-2 pt-1 pb-safe">
             <button
               onClick={onClose}
               className="px-4 py-2 rounded-lg border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 bg-transparent cursor-pointer"

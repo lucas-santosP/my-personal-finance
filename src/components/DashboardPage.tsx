@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { IconMenu2 } from "@tabler/icons-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { MONTHS } from "../constants";
 import { calcMonth, fmt, getMonthsForYear, getYears, monthKey } from "../utils/finance";
@@ -27,9 +28,10 @@ function Tip({ active, payload, label }: TipProps) {
 interface Props {
   months: MonthsMap;
   setView: (v: View) => void;
+  onOpenSidebar: () => void;
 }
 
-export function DashboardPage({ months, setView }: Props) {
+export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
   const years = getYears(months);
   const currentYear = years[0] ?? new Date().getFullYear();
   const monthsInYear = getMonthsForYear(months, currentYear);
@@ -64,20 +66,33 @@ export function DashboardPage({ months, setView }: Props) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}>
-      <div className="bg-white border-b border-neutral-200 flex-shrink-0 px-6 py-5">
-        <h1 className="text-xl font-medium">Dashboard</h1>
-        <p className="text-xs text-neutral-400 mt-0.5">
-          {currentYear} overview · {yearStats.months} months tracked
-        </p>
+      {/* Header */}
+      <div className="bg-white border-b border-neutral-200 flex-shrink-0 px-4 md:px-6 py-5">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onOpenSidebar}
+            className="md:hidden p-1.5 -ml-1 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
+          >
+            <IconMenu2 size={20} />
+          </button>
+          <div>
+            <h1 className="text-xl font-medium">Dashboard</h1>
+            <p className="text-xs text-neutral-400 mt-0.5">
+              {currentYear} overview · {yearStats.months} months tracked
+            </p>
+          </div>
+        </div>
       </div>
-      <div className="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-4">
+
+      <div className="flex-1 overflow-y-auto px-4 md:px-6 py-5 flex flex-col gap-4">
         {years.length === 0 ? (
           <div className="bg-white rounded-xl border border-neutral-200 p-12 text-center text-neutral-400 text-sm">
             No data yet. Add a month from the sidebar to get started.
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-4 gap-3">
+            {/* Stats — 2 cols on mobile, 4 on md+ */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
                 { label: "Total income", value: fmt(yearStats.income), cls: "text-green-800" },
                 { label: "Total expenses", value: fmt(yearStats.expenses), cls: "text-red-700" },
@@ -94,6 +109,8 @@ export function DashboardPage({ months, setView }: Props) {
                 </div>
               ))}
             </div>
+
+            {/* Chart */}
             {chartData.length > 0 && (
               <div className="bg-white rounded-xl border border-neutral-200 px-5 pt-4 pb-3">
                 <p className="text-xs font-medium text-neutral-500 mb-3">
@@ -121,7 +138,9 @@ export function DashboardPage({ months, setView }: Props) {
                 </ResponsiveContainer>
               </div>
             )}
-            <div className="grid grid-cols-2 gap-4">
+
+            {/* Bottom panels — 1 col on mobile, 2 on md+ */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white rounded-xl border border-neutral-200 px-5 pt-4 pb-4">
                 <p className="text-xs font-medium text-neutral-500 mb-3">
                   Expenses by category — {currentYear}
@@ -159,8 +178,12 @@ export function DashboardPage({ months, setView }: Props) {
                     >
                       <span className="text-sm text-neutral-700">{MONTHS[m - 1]}</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-neutral-400">{fmt(totalIncome)} in</span>
-                        <span className="text-xs text-neutral-400">{fmt(totalExpenses)} out</span>
+                        <span className="hidden sm:inline text-xs text-neutral-400">
+                          {fmt(totalIncome)} in
+                        </span>
+                        <span className="hidden sm:inline text-xs text-neutral-400">
+                          {fmt(totalExpenses)} out
+                        </span>
                         <span
                           className={`text-xs font-medium w-16 text-right ${balance >= 0 ? "text-green-800" : "text-red-700"}`}
                         >

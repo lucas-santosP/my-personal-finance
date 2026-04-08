@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IconCopy, IconTrash } from "@tabler/icons-react";
+import { IconCopy, IconMenu2, IconTrash } from "@tabler/icons-react";
 import { MONTHS } from "../constants";
 import { calcMonth, emptyMonth, mkId, monthKey } from "../utils/finance";
 import { saveData } from "../utils/storage";
@@ -20,9 +20,10 @@ interface Props {
   months: MonthsMap;
   setMonths: (updater: (prev: MonthsMap) => MonthsMap) => void;
   setView: (v: View) => void;
+  onOpenSidebar: () => void;
 }
 
-export function MonthPage({ year, month, months, setMonths, setView }: Props) {
+export function MonthPage({ year, month, months, setMonths, setView, onOpenSidebar }: Props) {
   const data = months[monthKey(year, month)] ?? emptyMonth();
   const { totalIncome, totalExpenses, balance, unpaid, pct } = calcMonth(data);
   const [modal, setModal] = useState<ModalState>({ open: false, section: "income", entry: null });
@@ -91,40 +92,51 @@ export function MonthPage({ year, month, months, setMonths, setView }: Props) {
   const totalEntries = data.income.length + data.expenses.length;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}>
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Header */}
       <div className="bg-white border-b border-neutral-200 flex-shrink-0">
-        <div className="flex items-start justify-between px-6 pt-5 pb-0">
-          <div>
-            <h1 className="text-xl font-medium">
-              {MONTHS[month - 1]} {year}
-            </h1>
-            <p className="text-xs text-neutral-400 mt-0.5">
-              {allPaid
-                ? "All paid · "
-                : unpaid > 0
-                  ? `${unpaid.toLocaleString("en-US", { style: "currency", currency: "USD" })} unpaid · `
-                  : ""}
-              {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
-            </p>
+        <div className="flex items-center justify-between px-4 md:px-6 pt-5 pb-0 gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <button
+              onClick={onOpenSidebar}
+              className="md:hidden flex-shrink-0 p-1.5 -ml-1 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
+            >
+              <IconMenu2 size={20} />
+            </button>
+            <div className="min-w-0">
+              <h1 className="text-xl font-medium truncate">
+                {MONTHS[month - 1]} {year}
+              </h1>
+              <p className="text-xs text-neutral-400 mt-0.5">
+                {allPaid
+                  ? "All paid · "
+                  : unpaid > 0
+                    ? `${unpaid.toLocaleString("en-US", { style: "currency", currency: "USD" })} unpaid · `
+                    : ""}
+                {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
+              </p>
+            </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-shrink-0">
             <button
               onClick={() => setShowCopy(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer"
+              className="flex items-center gap-1.5 px-3 md:px-3.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer"
             >
               <IconCopy size={14} />
-              Copy to month
+              <span className="hidden sm:inline">Copy to month</span>
             </button>
             <button
               onClick={() => setConfirmDel(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-red-50 hover:text-red-700 hover:border-red-200 bg-transparent cursor-pointer"
+              className="flex items-center gap-1.5 px-3 md:px-3.5 py-2 rounded-lg border border-neutral-200 text-xs text-neutral-500 hover:bg-red-50 hover:text-red-700 hover:border-red-200 bg-transparent cursor-pointer"
             >
               <IconTrash size={14} />
-              Delete month
+              <span className="hidden sm:inline">Delete month</span>
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-4 border-t border-neutral-200 mt-4">
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-neutral-200 mt-4">
           {[
             { label: "Income", value: totalIncome, cls: "text-green-800" },
             { label: "Expenses", value: totalExpenses, cls: "text-red-700" },
@@ -139,7 +151,14 @@ export function MonthPage({ year, month, months, setMonths, setView }: Props) {
               cls: unpaid > 0 ? "text-amber-700" : "text-neutral-400",
             },
           ].map((s, i) => (
-            <div key={i} className={`px-5 py-3 ${i < 3 ? "border-r border-neutral-200" : ""}`}>
+            <div
+              key={i}
+              className={`px-4 md:px-5 py-3 border-neutral-200
+                ${i % 2 === 0 ? "border-r" : ""}
+                ${i < 2 ? "border-b md:border-b-0" : ""}
+                ${i === 1 ? "md:border-r" : ""}
+              `}
+            >
               <p className="text-xs text-neutral-400 mb-1">{s.label}</p>
               <p className={`text-base font-medium ${s.cls}`}>
                 {s.value.toLocaleString("en-US", {
@@ -153,33 +172,16 @@ export function MonthPage({ year, month, months, setMonths, setView }: Props) {
         </div>
       </div>
 
-      <div
-        style={{
-          flex: 1,
-          minHeight: 0,
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
-          padding: "16px 24px",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            minHeight: 0,
-            maxHeight: "35%",
-            flexShrink: 0,
-          }}
-          className="bg-white rounded-xl border border-neutral-200 overflow-hidden"
-        >
+      {/* Tables — desktop: fixed split layout; mobile: scrollable */}
+      <div className="flex-1 min-h-0 flex flex-col gap-3 p-4 md:px-6 overflow-y-auto md:overflow-hidden">
+        {/* Income */}
+        <div className="flex flex-col min-h-0 flex-shrink-0 md:max-h-[35%] bg-white rounded-xl border border-neutral-200 overflow-hidden">
           <TableHeader
             section="income"
             entries={data.income}
             onAdd={() => setModal({ open: true, section: "income", entry: null })}
           />
-          <div style={{ overflowY: "auto", flex: 1 }}>
+          <div className="overflow-auto flex-1">
             <TableBody
               section="income"
               entries={data.income}
@@ -191,16 +193,15 @@ export function MonthPage({ year, month, months, setMonths, setView }: Props) {
             />
           </div>
         </div>
-        <div
-          style={{ display: "flex", flexDirection: "column", minHeight: 0, flex: 1 }}
-          className="bg-white rounded-xl border border-neutral-200 overflow-hidden"
-        >
+
+        {/* Expenses */}
+        <div className="flex flex-col min-h-0 md:flex-1 bg-white rounded-xl border border-neutral-200 overflow-hidden">
           <TableHeader
             section="expenses"
             entries={data.expenses}
             onAdd={() => setModal({ open: true, section: "expenses", entry: null })}
           />
-          <div style={{ overflowY: "auto", flex: 1 }}>
+          <div className="overflow-auto flex-1">
             <TableBody
               section="expenses"
               entries={data.expenses}
@@ -212,6 +213,8 @@ export function MonthPage({ year, month, months, setMonths, setView }: Props) {
             />
           </div>
         </div>
+
+        {/* Spending rate */}
         {totalIncome > 0 && (
           <div className="flex-shrink-0 bg-white rounded-xl border border-neutral-200 px-5 py-4">
             <div className="flex justify-between items-center mb-2">

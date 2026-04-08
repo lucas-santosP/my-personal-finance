@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { DayPicker } from "react-day-picker";
 
+const POPOVER_W = 230;
+const POPOVER_H = 290;
+
 interface Props {
   year: number;
   month: number; // 1-12
@@ -30,7 +33,18 @@ export function DayPickerInput({
   const handleOpen = () => {
     if (triggerRef.current) {
       const r = triggerRef.current.getBoundingClientRect();
-      setPos({ top: r.bottom + 4, left: r.left });
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Clamp horizontally so the popover never bleeds off-screen
+      const left = Math.max(8, Math.min(r.left, vw - POPOVER_W - 8));
+
+      // Prefer opening below; fall back to above if not enough room
+      const spaceBelow = vh - r.bottom;
+      const top =
+        spaceBelow >= POPOVER_H + 8 ? r.bottom + 4 : Math.max(8, r.top - POPOVER_H - 4);
+
+      setPos({ top, left });
     }
     setOpen((o) => !o);
   };

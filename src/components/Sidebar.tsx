@@ -19,12 +19,19 @@ interface Props {
   view: View;
   setView: (v: View) => void;
   onAddMonth: (year: number, month: number) => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props) {
+export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, onClose }: Props) {
   const [viewYear, setViewYear] = useState(view.year ?? new Date().getFullYear());
   const years = getYears(months);
   const monthsInYear = getMonthsForYear(months, viewYear);
+
+  const navigate = (v: View) => {
+    setView(v);
+    onClose();
+  };
 
   const dotColor = (y: number, m: number) => {
     const d = months[monthKey(y, m)];
@@ -44,11 +51,18 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
     }
     if (!target) return;
     onAddMonth(viewYear, target);
-    setView({ page: "month", year: viewYear, month: target });
+    navigate({ page: "month", year: viewYear, month: target });
   };
 
   return (
-    <aside className="flex-shrink-0 flex flex-col bg-white border-r border-neutral-200 overflow-hidden w-72">
+    <aside
+      className={[
+        "fixed inset-y-0 left-0 z-40 flex flex-col bg-white border-r border-neutral-200 overflow-hidden w-72",
+        "transition-transform duration-200 ease-in-out",
+        isOpen ? "translate-x-0" : "-translate-x-full",
+        "md:relative md:inset-auto md:translate-x-0 md:z-auto md:flex-shrink-0",
+      ].join(" ")}
+    >
       <div className="flex justify-between px-4 py-4 border-b border-neutral-200">
         <div className="flex items-center gap-2 mb-0.5">
           <LogoMark size={32} />
@@ -60,7 +74,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
             <button
               onClick={() => {
                 onAddMonth(viewYear, 1);
-                setView({ page: "month", year: viewYear, month: 1 });
+                navigate({ page: "month", year: viewYear, month: 1 });
               }}
               className="ml-1 flex items-center gap-0.5 text-neutral-400 hover:text-neutral-700 border border-neutral-200 rounded px-1.5 py-1 bg-transparent cursor-pointer"
               style={{ fontSize: "10px" }}
@@ -94,7 +108,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
 
       <div className="px-2 pt-3 pb-1">
         <button
-          onClick={() => setView({ page: "dashboard" })}
+          onClick={() => navigate({ page: "dashboard" })}
           className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-left transition-colors border-none cursor-pointer ${
             view.page === "dashboard"
               ? "bg-neutral-100 text-neutral-900 font-medium"
@@ -120,7 +134,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth }: Props)
           return (
             <button
               key={m}
-              onClick={() => setView({ page: "month", year: viewYear, month: m })}
+              onClick={() => navigate({ page: "month", year: viewYear, month: m })}
               className={`flex items-center justify-between w-full px-4 py-2 text-sm text-left transition-colors border-none cursor-pointer ${
                 active
                   ? "bg-neutral-100 text-neutral-900 font-medium"

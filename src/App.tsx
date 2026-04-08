@@ -9,6 +9,7 @@ import type { MonthsMap, View } from "./types";
 export default function App() {
   const [months, setMonths] = useState<MonthsMap>(() => loadData());
   const [view, setView] = useState<View>({ page: "dashboard" });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleAddMonth = (year: number, month: number) => {
     setMonths((prev) => {
@@ -30,13 +31,24 @@ export default function App() {
       }}
       className="bg-neutral-100"
     >
+      {/* Mobile backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       <Sidebar
         months={months}
         setMonths={(data) => setMonths(data)}
         view={view}
         setView={setView}
         onAddMonth={handleAddMonth}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
+
       <main
         style={{
           flex: 1,
@@ -46,7 +58,13 @@ export default function App() {
           flexDirection: "column",
         }}
       >
-        {view.page === "dashboard" && <DashboardPage months={months} setView={setView} />}
+        {view.page === "dashboard" && (
+          <DashboardPage
+            months={months}
+            setView={setView}
+            onOpenSidebar={() => setSidebarOpen(true)}
+          />
+        )}
         {view.page === "month" && view.year !== undefined && view.month !== undefined && (
           <MonthPage
             key={`${view.year}-${view.month}`}
@@ -55,6 +73,7 @@ export default function App() {
             months={months}
             setMonths={setMonths}
             setView={setView}
+            onOpenSidebar={() => setSidebarOpen(true)}
           />
         )}
       </main>
