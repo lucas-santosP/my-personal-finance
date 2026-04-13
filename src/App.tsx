@@ -1,25 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "./contexts/AuthContext";
+import { AuthPage } from "./components/AuthPage";
 import { Sidebar } from "./components/Sidebar";
 import { DashboardPage } from "./components/DashboardPage";
 import { MonthPage } from "./components/MonthPage";
-import { loadData, saveData } from "./utils/storage";
+import { loadAllMonths, saveMonth, replaceAllMonths } from "./utils/storage";
 import { monthKey, emptyMonth } from "./utils/finance";
 import type { MonthsMap, View } from "./types";
 
 export default function App() {
-  const [months, setMonths] = useState<MonthsMap>(() => loadData());
+  const { user, loading: authLoading } = useAuth();
+  const [months, setMonths] = useState<MonthsMap>({});
+  const [dataLoading, setDataLoading] = useState(false);
   const [view, setView] = useState<View>({ page: "dashboard" });
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  useEffect(() => {
+    if (!user) {
+      setMonths({});
+      return;
+    }
+    setDataLoading(true);
+    loadAllMonths(user.uid)
+      .then(setMonths)
+      .finally(() => setDataLoading(false));
+  }, [user]);
+
   const handleAddMonth = (year: number, month: number) => {
-    setMonths((prev) => {
-      const key = monthKey(year, month);
-      if (prev[key]) return prev;
-      const next = { ...prev, [key]: emptyMonth() };
-      saveData(next);
-      return next;
-    });
+    if (!user) return;
+    const key = monthKey(year, month);
+    if (months[key]) return;
+    const data = emptyMonth();
+    setMonths((prev) => ({ ...prev, [key]: data }));
+    saveMonth(user.uid, key, data);
   };
+
+  const handleReplaceAll = async (data: MonthsMap) => {
+    if (!user) return;
+    await replaceAllMonths(user.uid, data);
+  };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="w-5 h-5 rounded-full border-2 border-neutral-300 border-t-neutral-700 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!user) return <AuthPage />;
 
   return (
     <div
@@ -41,10 +70,11 @@ export default function App() {
 
       <Sidebar
         months={months}
-        setMonths={(data) => setMonths(data)}
+        setMonths={setMonths}
         view={view}
         setView={setView}
         onAddMonth={handleAddMonth}
+        onReplaceAll={handleReplaceAll}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
@@ -58,23 +88,32 @@ export default function App() {
           flexDirection: "column",
         }}
       >
-        {view.page === "dashboard" && (
-          <DashboardPage
-            months={months}
-            setView={setView}
-            onOpenSidebar={() => setSidebarOpen(true)}
-          />
-        )}
-        {view.page === "month" && view.year !== undefined && view.month !== undefined && (
-          <MonthPage
-            key={`${view.year}-${view.month}`}
-            year={view.year}
-            month={view.month}
-            months={months}
-            setMonths={setMonths}
-            setView={setView}
-            onOpenSidebar={() => setSidebarOpen(true)}
-          />
+        {dataLoading ? (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-5 h-5 rounded-full border-2 border-neutral-300 border-t-neutral-700 animate-spin" />
+          </div>
+        ) : (
+          <>
+            {view.page === "dashboard" && (
+              <DashboardPage
+                months={months}
+                setView={setView}
+                onOpenSidebar={() => setSidebarOpen(true)}
+              />
+            )}
+            {view.page === "month" && view.year !== undefined && view.month !== undefined && (
+              <MonthPage
+                key={`${view.year}-${view.month}`}
+                uid={user.uid}
+                year={view.year}
+                month={view.month}
+                months={months}
+                setMonths={setMonths}
+                setView={setView}
+                onOpenSidebar={() => setSidebarOpen(true)}
+              />
+            )}
+          </>
         )}
       </main>
     </div>

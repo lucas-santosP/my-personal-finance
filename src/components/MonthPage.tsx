@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IconCopy, IconMenu2, IconTrash } from "@tabler/icons-react";
 import { MONTHS } from "../constants";
 import { calcMonth, emptyMonth, mkId, monthKey } from "../utils/finance";
-import { saveData } from "../utils/storage";
+import { saveMonth, deleteMonthDoc } from "../utils/storage";
 import { EntryModal } from "./EntryModal";
 import { TableHeader } from "./TableHeader";
 import { TableBody } from "./TableBody";
@@ -15,6 +15,7 @@ interface ModalState {
 }
 
 interface Props {
+  uid: string;
   year: number;
   month: number;
   months: MonthsMap;
@@ -23,7 +24,7 @@ interface Props {
   onOpenSidebar: () => void;
 }
 
-export function MonthPage({ year, month, months, setMonths, setView, onOpenSidebar }: Props) {
+export function MonthPage({ uid, year, month, months, setMonths, setView, onOpenSidebar }: Props) {
   const data = months[monthKey(year, month)] ?? emptyMonth();
   const { totalIncome, totalExpenses, balance, unpaid, pct } = calcMonth(data);
   const [modal, setModal] = useState<ModalState>({ open: false, section: "income", entry: null });
@@ -34,9 +35,9 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
   const updateData = (fn: (d: MonthData) => MonthData) => {
     setMonths((prev) => {
       const key = monthKey(year, month);
-      const next = { ...prev, [key]: fn(prev[key] ?? emptyMonth()) };
-      saveData(next);
-      return next;
+      const newData = fn(prev[key] ?? emptyMonth());
+      saveMonth(uid, key, newData);
+      return { ...prev, [key]: newData };
     });
   };
 
@@ -62,28 +63,22 @@ export function MonthPage({ year, month, months, setMonths, setView, onOpenSideb
   };
 
   const handleDeleteMonth = () => {
+    const key = monthKey(year, month);
     setMonths((prev) => {
       const next = { ...prev };
-      delete next[monthKey(year, month)];
-      saveData(next);
+      delete next[key];
       return next;
     });
+    deleteMonthDoc(uid, key);
     setView({ page: "dashboard" });
   };
 
   const handleCopy = () => {
     const remap = (entries: Entry[]) => entries.map((e) => ({ ...e, id: mkId(), paid: false }));
-    setMonths((prev) => {
-      const next = {
-        ...prev,
-        [monthKey(Number(copyTarget.year), Number(copyTarget.month))]: {
-          income: remap(data.income),
-          expenses: remap(data.expenses),
-        },
-      };
-      saveData(next);
-      return next;
-    });
+    const key = monthKey(Number(copyTarget.year), Number(copyTarget.month));
+    const newData = { income: remap(data.income), expenses: remap(data.expenses) };
+    setMonths((prev) => ({ ...prev, [key]: newData }));
+    saveMonth(uid, key, newData);
     setView({ page: "month", year: Number(copyTarget.year), month: Number(copyTarget.month) });
     setShowCopy(false);
   };

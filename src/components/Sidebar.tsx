@@ -4,6 +4,7 @@ import {
   IconChevronRight,
   IconDownload,
   IconLayoutDashboard,
+  IconLogout,
   IconPlus,
   IconUpload,
 } from "@tabler/icons-react";
@@ -11,6 +12,7 @@ import { LogoMark } from "./LogoMark";
 import { MONTHS } from "../constants";
 import { calcMonth, getYears, getMonthsForYear, monthKey } from "../utils/finance";
 import { exportJSON, importJSON } from "../utils/io";
+import { useAuth } from "../contexts/AuthContext";
 import type { MonthsMap, View } from "../types";
 
 interface Props {
@@ -19,11 +21,22 @@ interface Props {
   view: View;
   setView: (v: View) => void;
   onAddMonth: (year: number, month: number) => void;
+  onReplaceAll: (data: MonthsMap) => Promise<void>;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, onClose }: Props) {
+export function Sidebar({
+  months,
+  setMonths,
+  view,
+  setView,
+  onAddMonth,
+  onReplaceAll,
+  isOpen,
+  onClose,
+}: Props) {
+  const { user, logout } = useAuth();
   const [viewYear, setViewYear] = useState(view.year ?? new Date().getFullYear());
   const years = getYears(months);
   const monthsInYear = getMonthsForYear(months, viewYear);
@@ -54,6 +67,8 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
     navigate({ page: "month", year: viewYear, month: target });
   };
 
+  const avatarLetter = user?.displayName?.[0] ?? user?.email?.[0] ?? "?";
+
   return (
     <aside
       className={[
@@ -63,6 +78,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
         "md:relative md:inset-auto md:translate-x-0 md:z-auto md:flex-shrink-0",
       ].join(" ")}
     >
+      {/* Header */}
       <div className="flex justify-between px-4 py-4 border-b border-neutral-200">
         <div className="flex items-center gap-2 mb-0.5">
           <LogoMark size={32} />
@@ -83,14 +99,12 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
               year
             </button>
           )}
-
           <button
             onClick={() => setViewYear((y) => y - 1)}
             className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
           >
             <IconChevronLeft size={16} />
           </button>
-
           <span
             className="text-xs text-neutral-500 font-medium text-center"
             style={{ minWidth: "32px" }}
@@ -106,6 +120,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
         </div>
       </div>
 
+      {/* Navigation */}
       <div className="px-2 pt-3 pb-1">
         <button
           onClick={() => navigate({ page: "dashboard" })}
@@ -119,12 +134,15 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
           Dashboard
         </button>
       </div>
+
       <p
         className="px-4 pt-3 pb-1 text-neutral-400 uppercase tracking-widest"
         style={{ fontSize: "10px" }}
       >
         Months
       </p>
+
+      {/* Month list */}
       <div className="flex-1 overflow-y-auto pb-2">
         {monthsInYear.length === 0 && (
           <p className="px-4 py-3 text-xs text-neutral-400">No months yet.</p>
@@ -147,6 +165,8 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
           );
         })}
       </div>
+
+      {/* Footer actions */}
       <div className="border-t border-neutral-200 p-2.5 flex flex-col gap-1.5">
         <button
           onClick={handleAdd}
@@ -164,11 +184,41 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, isOpen, 
             Export
           </button>
           <button
-            onClick={() => importJSON(setMonths)}
+            onClick={() => importJSON(setMonths, onReplaceAll)}
             className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md border border-neutral-200 text-xs text-neutral-500 hover:bg-neutral-50 bg-transparent cursor-pointer transition-colors"
           >
             <IconUpload size={14} />
             Import
+          </button>
+        </div>
+
+        {/* User profile */}
+        <div className="flex items-center gap-2.5 px-2 pt-1.5 mt-0.5 border-t border-neutral-100">
+          <div className="w-7 h-7 rounded-full bg-neutral-200 flex items-center justify-center text-xs font-semibold text-neutral-600 uppercase flex-shrink-0">
+            {user?.photoURL ? (
+              <img
+                src={user.photoURL}
+                alt="avatar"
+                referrerPolicy="no-referrer"
+                className="w-7 h-7 rounded-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  e.currentTarget.parentElement!.textContent = avatarLetter.toUpperCase();
+                }}
+              />
+            ) : (
+              avatarLetter
+            )}
+          </div>
+          <span className="text-xs text-neutral-500 truncate flex-1 min-w-0">
+            {user?.displayName ?? user?.email}
+          </span>
+          <button
+            onClick={logout}
+            title="Sign out"
+            className="flex-shrink-0 p-1.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
+          >
+            <IconLogout size={14} />
           </button>
         </div>
       </div>

@@ -1,5 +1,4 @@
 import type { MonthsMap } from "../types";
-import { saveData } from "./storage";
 
 export function exportJSON(months: MonthsMap) {
   const blob = new Blob([JSON.stringify(months, null, 2)], { type: "application/json" });
@@ -11,7 +10,10 @@ export function exportJSON(months: MonthsMap) {
   URL.revokeObjectURL(url);
 }
 
-export function importJSON(setMonths: (data: MonthsMap) => void) {
+export function importJSON(
+  setMonths: (data: MonthsMap) => void,
+  saveAll: (data: MonthsMap) => Promise<void>,
+) {
   const input = document.createElement("input");
   input.type = "file";
   input.accept = ".json";
@@ -19,11 +21,11 @@ export function importJSON(setMonths: (data: MonthsMap) => void) {
     const file = (e.target as HTMLInputElement).files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => {
+    reader.onload = async (ev) => {
       try {
         const data = JSON.parse(ev.target?.result as string) as MonthsMap;
+        await saveAll(data);
         setMonths(data);
-        saveData(data);
       } catch {
         alert("Invalid JSON file.");
       }
