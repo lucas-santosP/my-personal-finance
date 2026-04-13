@@ -40,8 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         loading,
         signIn: (email, password) => signInWithEmailAndPassword(auth, email, password).then(),
-        signUp: (email, password) =>
-          createUserWithEmailAndPassword(auth, email, password).then(),
+        signUp: (email, password) => createUserWithEmailAndPassword(auth, email, password).then(),
         signInGoogle: () => signInWithPopup(auth, googleProvider).then(),
         logout: () => signOut(auth),
         resetPassword: (email) => sendPasswordResetEmail(auth, email),

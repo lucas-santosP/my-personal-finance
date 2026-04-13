@@ -14,14 +14,7 @@ interface Props {
   className?: string;
 }
 
-export function DayPickerInput({
-  year,
-  month,
-  value,
-  onChange,
-  placeholder = "Pick a day",
-  className,
-}: Props) {
+export function DayPickerInput({ year, month, value, onChange, placeholder = "Pick a day", className }: Props) {
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLInputElement>(null);
@@ -51,11 +44,7 @@ export function DayPickerInput({
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
-      if (
-        triggerRef.current?.contains(e.target as Node) ||
-        popoverRef.current?.contains(e.target as Node)
-      )
-        return;
+      if (triggerRef.current?.contains(e.target as Node) || popoverRef.current?.contains(e.target as Node)) return;
       setOpen(false);
     };
     document.addEventListener("mousedown", handler);
@@ -70,10 +59,7 @@ export function DayPickerInput({
         value={value ? `Day ${value}` : ""}
         placeholder={placeholder}
         onClick={handleOpen}
-        className={
-          className ??
-          "flex-1 min-w-0 px-3 py-2 rounded-md border border-neutral-200 bg-white text-sm outline-none cursor-pointer"
-        }
+        className={className ?? "flex-1 min-w-0 px-3 py-2 rounded-md border border-neutral-200 bg-white text-sm outline-none cursor-pointer"}
       />
       {open &&
         createPortal(
@@ -106,8 +92,7 @@ export function DayPickerInput({
                 row: "",
                 cell: "p-0.5 text-center",
                 day: "w-8 h-8 inline-flex items-center justify-center rounded-md text-xs text-neutral-700 hover:bg-neutral-100 cursor-pointer transition-colors",
-                day_selected:
-                  "bg-neutral-900 text-white hover:bg-neutral-800 font-medium rounded-md",
+                day_selected: "bg-neutral-900 text-white hover:bg-neutral-800 font-medium rounded-md",
                 day_today: "text-green-600 font-semibold",
                 day_outside: "opacity-0 pointer-events-none",
                 day_disabled: "text-neutral-300 cursor-default hover:bg-transparent",

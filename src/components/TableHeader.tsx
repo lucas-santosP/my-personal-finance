@@ -14,9 +14,7 @@ export function TableHeader({ section, entries, onAdd }: Props) {
   return (
     <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200 flex-shrink-0">
       <div className="flex items-center gap-2">
-        <span
-          className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${isIncome ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}
-        >
+        <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${isIncome ? "bg-green-100 text-green-800" : "bg-red-100 text-red-700"}`}>
           {isIncome ? "income" : "expenses"}
         </span>
         <span className="text-xs text-neutral-400">{entries.length} entries</span>

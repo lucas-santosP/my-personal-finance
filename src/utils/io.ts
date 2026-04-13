@@ -10,10 +10,7 @@ export function exportJSON(months: MonthsMap) {
   URL.revokeObjectURL(url);
 }
 
-export function importJSON(
-  setMonths: (data: MonthsMap) => void,
-  saveAll: (data: MonthsMap) => Promise<void>,
-) {
+export function importJSON(setMonths: (data: MonthsMap) => void, saveAll: (data: MonthsMap) => Promise<void>) {
   const input = document.createElement("input");
   input.type = "file";
   input.accept = ".json";

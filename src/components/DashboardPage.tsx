@@ -113,18 +113,11 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
             {/* Chart */}
             {chartData.length > 0 && (
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-3">
-                <p className="text-xs font-medium text-neutral-500 mb-3">
-                  Monthly income vs expenses — {currentYear}
-                </p>
+                <p className="text-xs font-medium text-neutral-500 mb-3">Monthly income vs expenses — {currentYear}</p>
                 <ResponsiveContainer width="100%" height={180}>
                   <BarChart data={chartData} barSize={12} barGap={4}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0ee" vertical={false} />
-                    <XAxis
-                      dataKey="name"
-                      tick={{ fontSize: 11, fill: "#aaa" }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
+                    <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#aaa" }} axisLine={false} tickLine={false} />
                     <YAxis
                       tick={{ fontSize: 11, fill: "#aaa" }}
                       axisLine={false}
@@ -142,9 +135,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
             {/* Bottom panels — 1 col on mobile, 2 on md+ */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-4">
-                <p className="text-xs font-medium text-neutral-500 mb-3">
-                  Expenses by category — {currentYear}
-                </p>
+                <p className="text-xs font-medium text-neutral-500 mb-3">Expenses by category — {currentYear}</p>
                 {catList.length === 0 ? (
                   <p className="text-sm text-neutral-400">No expense data yet.</p>
                 ) : (
@@ -152,10 +143,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
                     <div key={cat} className="flex items-center gap-2.5 py-1.5">
                       <span className="w-20 text-xs text-neutral-500 truncate">{cat}</span>
                       <div className="flex-1 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full rounded-full"
-                          style={{ width: `${(val / maxCat) * 100}%`, background: "#F09595" }}
-                        />
+                        <div className="h-full rounded-full" style={{ width: `${(val / maxCat) * 100}%`, background: "#F09595" }} />
                       </div>
                       <span className="w-16 text-right text-xs text-neutral-500">{fmt(val)}</span>
                     </div>
@@ -163,13 +151,9 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
                 )}
               </div>
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-2">
-                <p className="text-xs font-medium text-neutral-500 mb-3">
-                  Monthly summary — {currentYear}
-                </p>
+                <p className="text-xs font-medium text-neutral-500 mb-3">Monthly summary — {currentYear}</p>
                 {monthsInYear.map((m) => {
-                  const { balance, totalIncome, totalExpenses } = calcMonth(
-                    months[monthKey(currentYear, m)],
-                  );
+                  const { balance, totalIncome, totalExpenses } = calcMonth(months[monthKey(currentYear, m)]);
                   return (
                     <button
                       key={m}
@@ -178,15 +162,9 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
                     >
                       <span className="text-sm text-neutral-700">{MONTHS[m - 1]}</span>
                       <div className="flex items-center gap-2">
-                        <span className="hidden sm:inline text-xs text-neutral-400">
-                          {fmt(totalIncome)} in
-                        </span>
-                        <span className="hidden sm:inline text-xs text-neutral-400">
-                          {fmt(totalExpenses)} out
-                        </span>
-                        <span
-                          className={`text-xs font-medium w-16 text-right ${balance >= 0 ? "text-green-800" : "text-red-700"}`}
-                        >
+                        <span className="hidden sm:inline text-xs text-neutral-400">{fmt(totalIncome)} in</span>
+                        <span className="hidden sm:inline text-xs text-neutral-400">{fmt(totalExpenses)} out</span>
+                        <span className={`text-xs font-medium w-16 text-right ${balance >= 0 ? "text-green-800" : "text-red-700"}`}>
                           {balance >= 0 ? "+" : ""}
                           {fmt(balance)}
                         </span>

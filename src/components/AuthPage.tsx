@@ -75,15 +75,9 @@ export function AuthPage() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <LogoMark size={48} />
-          <p className="mt-3 text-base font-semibold tracking-tight text-neutral-900">
-            My Finances
-          </p>
+          <p className="mt-3 text-base font-semibold tracking-tight text-neutral-900">My Finances</p>
           <p className="text-sm text-neutral-400 mt-0.5">
-            {mode === "signin"
-              ? "Sign in to your account"
-              : mode === "signup"
-                ? "Create a new account"
-                : "Reset your password"}
+            {mode === "signin" ? "Sign in to your account" : mode === "signup" ? "Create a new account" : "Reset your password"}
           </p>
         </div>
 
@@ -110,9 +104,7 @@ export function AuthPage() {
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
-                Email
-              </label>
+              <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">Email</label>
               <input
                 type="email"
                 value={email}
@@ -126,9 +118,7 @@ export function AuthPage() {
 
             {mode !== "reset" && (
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
-                  Password
-                </label>
+                <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">Password</label>
                 <input
                   type="password"
                   value={password}
@@ -160,13 +150,19 @@ export function AuthPage() {
           {mode === "signin" && (
             <>
               <button
-                onClick={() => { setMode("signup"); clear(); }}
+                onClick={() => {
+                  setMode("signup");
+                  clear();
+                }}
                 className="text-xs text-neutral-500 hover:text-neutral-800 bg-transparent border-none cursor-pointer"
               >
                 Don't have an account? <span className="font-medium">Create one</span>
               </button>
               <button
-                onClick={() => { setMode("reset"); clear(); }}
+                onClick={() => {
+                  setMode("reset");
+                  clear();
+                }}
                 className="text-xs text-neutral-400 hover:text-neutral-600 bg-transparent border-none cursor-pointer"
               >
                 Forgot password?
@@ -175,7 +171,10 @@ export function AuthPage() {
           )}
           {(mode === "signup" || mode === "reset") && (
             <button
-              onClick={() => { setMode("signin"); clear(); }}
+              onClick={() => {
+                setMode("signin");
+                clear();
+              }}
               className="text-xs text-neutral-500 hover:text-neutral-800 bg-transparent border-none cursor-pointer"
             >
               Already have an account? <span className="font-medium">Sign in</span>

@@ -19,12 +19,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
   const today = new Date().getDate();
   const isCurrentMonth = new Date().getFullYear() === year && new Date().getMonth() + 1 === month;
 
-  if (rows.length === 0)
-    return (
-      <div className="py-10 text-center text-sm text-neutral-400">
-        No {isIncome ? "income" : "expenses"} yet.
-      </div>
-    );
+  if (rows.length === 0) return <div className="py-10 text-center text-sm text-neutral-400">No {isIncome ? "income" : "expenses"} yet.</div>;
 
   return (
     <>
@@ -33,10 +28,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
         {rows.map((e) => {
           const overdue = !isIncome && isCurrentMonth && e.dueDay && Number(e.dueDay) < today;
           return (
-            <div
-              key={e.id}
-              className="px-4 py-3 border-b border-neutral-100 hover:bg-neutral-50 transition-colors"
-            >
+            <div key={e.id} className="px-4 py-3 border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
               {/* Top row: description + paid toggle */}
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
@@ -66,17 +58,13 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
                   >
                     {e.kind}
                   </span>
-                  {e.dueDay && (
-                    <span className="text-xs text-neutral-400 flex-shrink-0">Day {e.dueDay}</span>
-                  )}
+                  {e.dueDay && <span className="text-xs text-neutral-400 flex-shrink-0">Day {e.dueDay}</span>}
                   <span className="text-xs px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-500 border border-neutral-200 truncate">
                     {e.category}
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 flex-shrink-0">
-                  <span className={`text-sm font-medium ${isIncome ? "text-green-800" : ""}`}>
-                    {fmt(e.value)}
-                  </span>
+                  <span className={`text-sm font-medium ${isIncome ? "text-green-800" : ""}`}>{fmt(e.value)}</span>
                   <button
                     onClick={() => onEdit(e)}
                     title="Edit"
@@ -97,18 +85,13 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
           );
         })}
         <div className="px-4 py-2.5 bg-neutral-50 border-t border-neutral-200 flex items-center justify-between">
-          <span className="text-xs text-neutral-500 font-medium">
-            Total {isIncome ? "income" : "expenses"}
-          </span>
+          <span className="text-xs text-neutral-500 font-medium">Total {isIncome ? "income" : "expenses"}</span>
           <span className="text-sm font-medium">{fmt(total)}</span>
         </div>
       </div>
 
       {/* ── Desktop: table ──────────────────────────────────────── */}
-      <table
-        className="hidden md:table w-full border-collapse"
-        style={{ tableLayout: "fixed", minWidth: "520px" }}
-      >
+      <table className="hidden md:table w-full border-collapse" style={{ tableLayout: "fixed", minWidth: "520px" }}>
         <colgroup>
           <col style={{ width: "28%" }} />
           <col style={{ width: "8%" }} />
@@ -120,15 +103,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
         </colgroup>
         <thead>
           <tr className="sticky top-0 bg-white z-10">
-            {[
-              "Description",
-              "Type",
-              isIncome ? "Date" : "Due",
-              "Category",
-              "Value",
-              isIncome ? "Received" : "Paid",
-              "",
-            ].map((h, i) => (
+            {["Description", "Type", isIncome ? "Date" : "Due", "Category", "Value", isIncome ? "Received" : "Paid", ""].map((h, i) => (
               <th
                 key={i}
                 className={`px-3 py-2 font-normal border-b border-neutral-200 text-xs text-neutral-400 ${i >= 4 ? "text-right" : "text-left"}`}
@@ -140,10 +115,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
         </thead>
         <tbody>
           {rows.map((e) => (
-            <tr
-              key={e.id}
-              className="group hover:bg-neutral-50 transition-colors border-b border-neutral-100"
-            >
+            <tr key={e.id} className="group hover:bg-neutral-50 transition-colors border-b border-neutral-100">
               <td className="px-3 py-2.5">
                 <p className="text-sm font-medium truncate">{e.description}</p>
                 {e.note && <p className="text-xs text-neutral-400 truncate">{e.note}</p>}
@@ -155,13 +127,9 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
                   {e.kind}
                 </span>
               </td>
-              <td className="px-3 py-2.5 text-sm text-neutral-500">
-                {e.dueDay ? `Day ${e.dueDay}` : "—"}
-              </td>
+              <td className="px-3 py-2.5 text-sm text-neutral-500">{e.dueDay ? `Day ${e.dueDay}` : "—"}</td>
               <td className="px-3 py-2.5">
-                <span className="text-xs px-2 py-0.5 rounded bg-neutral-100 text-neutral-500 border border-neutral-200">
-                  {e.category}
-                </span>
+                <span className="text-xs px-2 py-0.5 rounded bg-neutral-100 text-neutral-500 border border-neutral-200">{e.category}</span>
               </td>
               <td className="px-3 py-2.5 text-right text-sm font-medium">
                 <span className={isIncome ? "text-green-800" : ""}>{fmt(e.value)}</span>

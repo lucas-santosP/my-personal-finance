@@ -1,11 +1,4 @@
-import {
-  collection,
-  doc,
-  getDocs,
-  setDoc,
-  deleteDoc,
-  writeBatch,
-} from "firebase/firestore";
+import { collection, doc, getDocs, setDoc, deleteDoc, writeBatch } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import type { MonthData, MonthsMap } from "../types";
 

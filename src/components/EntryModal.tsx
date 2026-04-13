@@ -34,14 +34,9 @@ interface Props {
 }
 
 export function EntryModal({ section, entry, onSave, onClose, year, month }: Props) {
-  const [form, setForm] = useState<FormState>(
-    entry
-      ? { ...entry, value: String(entry.value), dueDay: entry.dueDay ?? "" }
-      : emptyForm(section),
-  );
+  const [form, setForm] = useState<FormState>(entry ? { ...entry, value: String(entry.value), dueDay: entry.dueDay ?? "" } : emptyForm(section));
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
-  const set = <K extends keyof FormState>(k: K, v: FormState[K]) =>
-    setForm((f) => ({ ...f, [k]: v }));
+  const set = <K extends keyof FormState>(k: K, v: FormState[K]) => setForm((f) => ({ ...f, [k]: v }));
   const cats = section === "income" ? INCOME_CATS : EXPENSE_CATS;
   const isEdit = !!entry;
   const selectedDay = form.dueDay ? Number(form.dueDay) : null;
@@ -49,8 +44,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
   const validate = () => {
     const e: Partial<Record<keyof FormState, string>> = {};
     if (!form.description.trim()) e.description = "Description is required.";
-    if (!form.value || isNaN(Number(form.value)) || Number(form.value) <= 0)
-      e.value = "Enter a valid amount greater than 0.";
+    if (!form.value || isNaN(Number(form.value)) || Number(form.value) <= 0) e.value = "Enter a valid amount greater than 0.";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -87,19 +81,14 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
           <p className="text-sm font-medium">
             {isEdit ? "Edit" : "Add"} {section === "income" ? "income" : "expense"}
           </p>
-          <button
-            onClick={onClose}
-            className="text-neutral-400 hover:text-neutral-700 p-1 bg-transparent border-none cursor-pointer"
-          >
+          <button onClick={onClose} className="text-neutral-400 hover:text-neutral-700 p-1 bg-transparent border-none cursor-pointer">
             <IconX size={16} />
           </button>
         </div>
 
         <div className="p-5 flex flex-col gap-3.5">
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
-              Description
-            </label>
+            <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">Description</label>
             <input
               value={form.description}
               onChange={(e) => {
@@ -109,16 +98,12 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               placeholder="e.g. Salary, Rent, Netflix…"
               className={`w-full px-3 py-2 rounded-md border text-sm outline-none ${errors.description ? "border-red-300 bg-red-50" : "border-neutral-200 bg-white"}`}
             />
-            {errors.description && (
-              <span className="text-xs text-red-600">{errors.description}</span>
-            )}
+            {errors.description && <span className="text-xs text-red-600">{errors.description}</span>}
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
-                Value
-              </label>
+              <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">Value</label>
               <input
                 type="number"
                 min="0"
@@ -159,9 +144,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
 
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
-                Category
-              </label>
+              <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">Category</label>
               <select
                 value={form.category}
                 onChange={(e) => set("category", e.target.value)}
@@ -173,9 +156,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
               </select>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
-                Type
-              </label>
+              <label className="text-xs font-medium text-neutral-500 uppercase tracking-wide">Type</label>
               <div className="flex gap-2 pt-1">
                 {(["PF", "PJ"] as const).map((t) => (
                   <button
@@ -208,22 +189,15 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
             />
           </div>
 
-          <div
-            className="flex items-center gap-2.5 cursor-pointer select-none"
-            onClick={() => set("paid", !form.paid)}
-          >
+          <div className="flex items-center gap-2.5 cursor-pointer select-none" onClick={() => set("paid", !form.paid)}>
             <div
               className={`w-6 h-6 rounded-md inline-flex items-center justify-center border transition-colors ${
-                form.paid
-                  ? "bg-green-100 border-green-300 text-green-700"
-                  : "bg-red-50 border-red-200 text-red-300"
+                form.paid ? "bg-green-100 border-green-300 text-green-700" : "bg-red-50 border-red-200 text-red-300"
               }`}
             >
               <IconCheck size={12} style={{ opacity: form.paid ? 1 : 0 }} />
             </div>
-            <span className="text-sm text-neutral-600">
-              Mark as {section === "income" ? "received" : "paid"}
-            </span>
+            <span className="text-sm text-neutral-600">Mark as {section === "income" ? "received" : "paid"}</span>
           </div>
 
           <div className="flex gap-2 pt-1 pb-safe">

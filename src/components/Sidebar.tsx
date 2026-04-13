@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  IconChevronLeft,
-  IconChevronRight,
-  IconDownload,
-  IconLayoutDashboard,
-  IconLogout,
-  IconPlus,
-  IconUpload,
-} from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight, IconDownload, IconLayoutDashboard, IconLogout, IconPlus, IconUpload } from "@tabler/icons-react";
 import { LogoMark } from "./LogoMark";
 import { MONTHS } from "../constants";
 import { calcMonth, getYears, getMonthsForYear, monthKey } from "../utils/finance";
@@ -26,16 +18,7 @@ interface Props {
   onClose: () => void;
 }
 
-export function Sidebar({
-  months,
-  setMonths,
-  view,
-  setView,
-  onAddMonth,
-  onReplaceAll,
-  isOpen,
-  onClose,
-}: Props) {
+export function Sidebar({ months, setMonths, view, setView, onAddMonth, onReplaceAll, isOpen, onClose }: Props) {
   const { user, logout } = useAuth();
   const [viewYear, setViewYear] = useState(view.year ?? new Date().getFullYear());
   const years = getYears(months);
@@ -105,10 +88,7 @@ export function Sidebar({
           >
             <IconChevronLeft size={16} />
           </button>
-          <span
-            className="text-xs text-neutral-500 font-medium text-center"
-            style={{ minWidth: "32px" }}
-          >
+          <span className="text-xs text-neutral-500 font-medium text-center" style={{ minWidth: "32px" }}>
             {viewYear}
           </span>
           <button
@@ -135,18 +115,13 @@ export function Sidebar({
         </button>
       </div>
 
-      <p
-        className="px-4 pt-3 pb-1 text-neutral-400 uppercase tracking-widest"
-        style={{ fontSize: "10px" }}
-      >
+      <p className="px-4 pt-3 pb-1 text-neutral-400 uppercase tracking-widest" style={{ fontSize: "10px" }}>
         Months
       </p>
 
       {/* Month list */}
       <div className="flex-1 overflow-y-auto pb-2">
-        {monthsInYear.length === 0 && (
-          <p className="px-4 py-3 text-xs text-neutral-400">No months yet.</p>
-        )}
+        {monthsInYear.length === 0 && <p className="px-4 py-3 text-xs text-neutral-400">No months yet.</p>}
         {monthsInYear.map((m) => {
           const active = view.page === "month" && view.year === viewYear && view.month === m;
           return (
@@ -154,9 +129,7 @@ export function Sidebar({
               key={m}
               onClick={() => navigate({ page: "month", year: viewYear, month: m })}
               className={`flex items-center justify-between w-full px-4 py-2 text-sm text-left transition-colors border-none cursor-pointer ${
-                active
-                  ? "bg-neutral-100 text-neutral-900 font-medium"
-                  : "text-neutral-500 hover:bg-neutral-50 hover:text-neutral-800 bg-transparent"
+                active ? "bg-neutral-100 text-neutral-900 font-medium" : "text-neutral-500 hover:bg-neutral-50 hover:text-neutral-800 bg-transparent"
               }`}
             >
               <span>{MONTHS[m - 1]}</span>
@@ -210,9 +183,7 @@ export function Sidebar({
               avatarLetter
             )}
           </div>
-          <span className="text-xs text-neutral-500 truncate flex-1 min-w-0">
-            {user?.displayName ?? user?.email}
-          </span>
+          <span className="text-xs text-neutral-500 truncate flex-1 min-w-0">{user?.displayName ?? user?.email}</span>
           <button
             onClick={logout}
             title="Sign out"

@@ -61,12 +61,7 @@ export default function App() {
       className="bg-neutral-100"
     >
       {/* Mobile backdrop */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-30 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      {sidebarOpen && <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
 
       <Sidebar
         months={months}
@@ -94,13 +89,7 @@ export default function App() {
           </div>
         ) : (
           <>
-            {view.page === "dashboard" && (
-              <DashboardPage
-                months={months}
-                setView={setView}
-                onOpenSidebar={() => setSidebarOpen(true)}
-              />
-            )}
+            {view.page === "dashboard" && <DashboardPage months={months} setView={setView} onOpenSidebar={() => setSidebarOpen(true)} />}
             {view.page === "month" && view.year !== undefined && view.month !== undefined && (
               <MonthPage
                 key={`${view.year}-${view.month}`}

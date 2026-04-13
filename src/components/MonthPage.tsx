@@ -48,8 +48,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
       ...d,
       [section]: d[section].map((e) => (e.id === updated.id ? updated : e)),
     }));
-  const deleteEntry = (section: Section, id: string) =>
-    updateData((d) => ({ ...d, [section]: d[section].filter((e) => e.id !== id) }));
+  const deleteEntry = (section: Section, id: string) => updateData((d) => ({ ...d, [section]: d[section].filter((e) => e.id !== id) }));
   const togglePaid = (section: Section, id: string) =>
     updateData((d) => ({
       ...d,
@@ -103,11 +102,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
                 {MONTHS[month - 1]} {year}
               </h1>
               <p className="text-xs text-neutral-400 mt-0.5">
-                {allPaid
-                  ? "All paid · "
-                  : unpaid > 0
-                    ? `${unpaid.toLocaleString("en-US", { style: "currency", currency: "USD" })} unpaid · `
-                    : ""}
+                {allPaid ? "All paid · " : unpaid > 0 ? `${unpaid.toLocaleString("en-US", { style: "currency", currency: "USD" })} unpaid · ` : ""}
                 {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
               </p>
             </div>
@@ -171,11 +166,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
       <div className="flex-1 min-h-0 flex flex-col gap-3 p-4 md:px-6 overflow-y-auto md:overflow-hidden">
         {/* Income */}
         <div className="flex flex-col min-h-0 flex-shrink-0 md:max-h-[35%] bg-white rounded-md border border-neutral-200 overflow-hidden">
-          <TableHeader
-            section="income"
-            entries={data.income}
-            onAdd={() => setModal({ open: true, section: "income", entry: null })}
-          />
+          <TableHeader section="income" entries={data.income} onAdd={() => setModal({ open: true, section: "income", entry: null })} />
           <div className="overflow-auto flex-1">
             <TableBody
               section="income"
@@ -191,11 +182,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
 
         {/* Expenses */}
         <div className="flex flex-col min-h-0 md:flex-1 bg-white rounded-md border border-neutral-200 overflow-hidden">
-          <TableHeader
-            section="expenses"
-            entries={data.expenses}
-            onAdd={() => setModal({ open: true, section: "expenses", entry: null })}
-          />
+          <TableHeader section="expenses" entries={data.expenses} onAdd={() => setModal({ open: true, section: "expenses", entry: null })} />
           <div className="overflow-auto flex-1">
             <TableBody
               section="expenses"
@@ -214,11 +201,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
           <div className="flex-shrink-0 bg-white rounded-md border border-neutral-200 px-5 py-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs text-neutral-500">Spending rate</span>
-              <span
-                className={`text-sm font-medium ${pct > 90 ? "text-red-700" : pct > 70 ? "text-amber-700" : "text-green-800"}`}
-              >
-                {pct}%
-              </span>
+              <span className={`text-sm font-medium ${pct > 90 ? "text-red-700" : pct > 70 ? "text-amber-700" : "text-green-800"}`}>{pct}%</span>
             </div>
             <div className="h-1.5 bg-neutral-100 rounded-full overflow-hidden">
               <div
@@ -245,9 +228,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-5">
           <div className="bg-white rounded-md border border-neutral-200 max-w-sm w-full p-5">
             <p className="text-sm font-medium mb-1">Delete {MONTHS[month - 1]}?</p>
-            <p className="text-sm text-neutral-500 mb-4">
-              All entries will be permanently removed.
-            </p>
+            <p className="text-sm text-neutral-500 mb-4">All entries will be permanently removed.</p>
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setConfirmDel(false)}
@@ -270,14 +251,10 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-5">
           <div className="bg-white rounded-md border border-neutral-200 max-w-sm w-full p-5">
             <p className="text-sm font-medium mb-1">Copy to another month</p>
-            <p className="text-sm text-neutral-500 mb-4">
-              All entries copied. Status resets to unpaid.
-            </p>
+            <p className="text-sm text-neutral-500 mb-4">All entries copied. Status resets to unpaid.</p>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-neutral-500 font-medium uppercase tracking-wide">
-                  Year
-                </label>
+                <label className="text-xs text-neutral-500 font-medium uppercase tracking-wide">Year</label>
                 <input
                   type="number"
                   value={copyTarget.year}
@@ -286,9 +263,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-neutral-500 font-medium uppercase tracking-wide">
-                  Month
-                </label>
+                <label className="text-xs text-neutral-500 font-medium uppercase tracking-wide">Month</label>
                 <select
                   value={copyTarget.month}
                   onChange={(e) => setCopyTarget((t) => ({ ...t, month: Number(e.target.value) }))}
