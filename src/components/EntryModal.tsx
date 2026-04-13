@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { INCOME_CATS, EXPENSE_CATS } from "../constants";
 import { DayPickerInput } from "./DayPickerInput";
 import type { Entry, Section } from "../types";
@@ -226,18 +226,19 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
             </span>
           </div>
 
-          <div className="flex justify-end gap-2 pt-1 pb-safe">
+          <div className="flex gap-2 pt-1 pb-safe">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-md border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 bg-transparent cursor-pointer"
+              className="flex-1 px-4 py-2 rounded-md border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 bg-transparent cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="px-4 py-2 rounded-md bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-neutral-900 text-white text-sm hover:bg-neutral-700 border-none cursor-pointer"
             >
-              {isEdit ? "Save changes" : "Add"}
+              <IconPlus size={13} />
+              <span>{isEdit ? "Save changes" : "Add"}</span>
             </button>
           </div>
         </div>
