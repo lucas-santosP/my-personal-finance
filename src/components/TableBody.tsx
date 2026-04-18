@@ -1,6 +1,43 @@
-import { IconCheck, IconPencil, IconX } from "@tabler/icons-react";
+import { useState } from "react";
+import { IconCheck, IconChevronDown, IconChevronUp, IconPencil, IconX } from "@tabler/icons-react";
 import { fmt } from "../utils/finance";
 import type { Entry, Section } from "../types";
+
+type SortField = "description" | "kind" | "dueDay" | "category" | "value" | "paid";
+type SortDir = "asc" | "desc";
+
+function compareEntries(a: Entry, b: Entry, field: SortField, dir: SortDir): number {
+  let cmp = 0;
+  switch (field) {
+    case "description":
+    case "category":
+      cmp = a[field].localeCompare(b[field]);
+      break;
+    case "kind":
+      cmp = a.kind.localeCompare(b.kind);
+      break;
+    case "dueDay":
+      cmp = (Number(a.dueDay) || 0) - (Number(b.dueDay) || 0);
+      break;
+    case "value":
+      cmp = a.value - b.value;
+      break;
+    case "paid":
+      cmp = Number(a.paid) - Number(b.paid);
+      break;
+  }
+  return dir === "desc" ? -cmp : cmp;
+}
+
+function sortEntries(entries: Entry[], field: SortField, dir: SortDir): Entry[] {
+  return [...entries].sort((a, b) => {
+    const primary = compareEntries(a, b, field, dir);
+    if (primary !== 0) return primary;
+    // Secondary sort: always by type (kind)
+    if (field !== "kind") return a.kind.localeCompare(b.kind);
+    return 0;
+  });
+}
 
 interface Props {
   section: Section;
@@ -14,7 +51,24 @@ interface Props {
 
 export function TableBody({ section, entries, year, month, onEdit, onDelete, onToggle }: Props) {
   const isIncome = section === "income";
-  const rows = [...entries].sort((a, b) => (Number(a.dueDay) || 0) - (Number(b.dueDay) || 0));
+  const [sortField, setSortField] = useState<SortField>("dueDay");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
+
+  function handleSort(field: SortField) {
+    if (sortField === field) {
+      if (sortDir === "asc") {
+        setSortDir("desc");
+      } else {
+        setSortField("dueDay");
+        setSortDir("asc");
+      }
+    } else {
+      setSortField(field);
+      setSortDir("asc");
+    }
+  }
+
+  const rows = sortEntries(entries, sortField, sortDir);
   const total = entries.reduce((s, e) => s + Number(e.value || 0), 0);
   const today = new Date().getDate();
   const isCurrentMonth = new Date().getFullYear() === year && new Date().getMonth() + 1 === month;
@@ -103,12 +157,26 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
         </colgroup>
         <thead>
           <tr className="sticky top-0 bg-white z-10">
-            {["Description", "Type", isIncome ? "Date" : "Due", "Category", "Value", isIncome ? "Received" : "Paid", ""].map((h, i) => (
+            {(
+              [
+                { label: "Description", field: "description" as SortField },
+                { label: "Type", field: "kind" as SortField },
+                { label: isIncome ? "Date" : "Due", field: "dueDay" as SortField },
+                { label: "Category", field: "category" as SortField },
+                { label: "Value", field: "value" as SortField },
+                { label: isIncome ? "Received" : "Paid", field: "paid" as SortField },
+                { label: "", field: null },
+              ] as const
+            ).map((h, i) => (
               <th
                 key={i}
-                className={`px-3 py-2 font-normal border-b border-neutral-200 text-xs text-neutral-400 ${i >= 4 ? "text-right" : "text-left"}`}
+                className={`px-3 py-2 font-normal border-b border-neutral-200 text-xs text-neutral-400 ${i >= 4 ? "text-right" : "text-left"} ${h.field ? "cursor-pointer select-none hover:text-neutral-600" : ""}`}
+                onClick={h.field ? () => handleSort(h.field!) : undefined}
               >
-                {h}
+                <span className={`inline-flex items-center gap-0.5 ${i >= 4 ? "justify-end" : ""}`}>
+                  {h.label}
+                  {h.field && sortField === h.field && (sortDir === "asc" ? <IconChevronUp size={12} /> : <IconChevronDown size={12} />)}
+                </span>
               </th>
             ))}
           </tr>
