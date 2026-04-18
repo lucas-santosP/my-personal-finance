@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { IconMenu2 } from "@tabler/icons-react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { MONTHS } from "../constants";
-import { calcMonth, fmt, getMonthsForYear, getYears, monthKey } from "../utils/finance";
+import { calcMonth, fmt, getMonthsForYear, monthKey } from "../utils/finance";
 import type { MonthsMap, View } from "../types";
 
 interface TipProps {
@@ -28,19 +28,25 @@ function Tip({ active, payload, label }: TipProps) {
 interface Props {
   months: MonthsMap;
   setView: (v: View) => void;
+  viewYear: number;
   onOpenSidebar: () => void;
 }
 
-export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
-  const years = getYears(months);
-  const currentYear = years[0] ?? new Date().getFullYear();
+export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Props) {
+  const currentYear = viewYear;
   const monthsInYear = getMonthsForYear(months, currentYear);
 
-  const chartData = monthsInYear.map((m) => {
-    const d = months[monthKey(currentYear, m)];
+  const chartData = MONTHS.map((name, i) => {
+    const key = monthKey(currentYear, i + 1);
+    const d = months[key];
+    if (!d) return { name: name.slice(0, 3), income: undefined, expenses: undefined };
     const { totalIncome, totalExpenses } = calcMonth(d);
-    return { name: MONTHS[m - 1].slice(0, 3), income: totalIncome, expenses: totalExpenses };
+    return { name: name.slice(0, 3), income: totalIncome, expenses: totalExpenses };
   });
+
+  const chartValues = chartData.flatMap((d) => [d.income, d.expenses].filter((v): v is number => v !== undefined));
+  const chartMin = Math.max(0, Math.floor((Math.min(...chartValues) * 0.9) / 1000) * 1000);
+  const chartMax = Math.ceil((Math.max(...chartValues) * 1.05) / 1000) * 1000;
 
   const yearStats = useMemo(() => {
     let income = 0,
@@ -85,7 +91,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 md:px-6 py-5 flex flex-col gap-4">
-        {years.length === 0 ? (
+        {monthsInYear.length === 0 ? (
           <div className="bg-white rounded-md border border-neutral-200 p-12 text-center text-neutral-500 text-sm">
             No data yet. Add a month from the sidebar to get started.
           </div>
@@ -111,23 +117,25 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
             </div>
 
             {/* Chart */}
-            {chartData.length > 0 && (
+            {monthsInYear.length > 0 && (
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-3">
                 <p className="text-xs font-medium text-neutral-500 mb-3">Monthly income vs expenses — {currentYear}</p>
-                <ResponsiveContainer width="100%" height={180}>
-                  <BarChart data={chartData} barSize={12} barGap={4}>
+                <ResponsiveContainer width="100%" height={240}>
+                  <LineChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0ee" vertical={false} />
                     <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#aaa" }} axisLine={false} tickLine={false} />
                     <YAxis
                       tick={{ fontSize: 11, fill: "#aaa" }}
                       axisLine={false}
                       tickLine={false}
+                      tickCount={4}
+                      domain={[chartMin, chartMax]}
                       tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}k`}
                     />
                     <Tooltip content={<Tip />} />
-                    <Bar dataKey="income" fill="#97C459" radius={[3, 3, 0, 0]} name="Income" />
-                    <Bar dataKey="expenses" fill="#F09595" radius={[3, 3, 0, 0]} name="Expenses" />
-                  </BarChart>
+                    <Line type="monotone" dataKey="income" stroke="#97C459" strokeWidth={2} dot={{ r: 3 }} name="Income" />
+                    <Line type="monotone" dataKey="expenses" stroke="#F09595" strokeWidth={2} dot={{ r: 3 }} name="Expenses" />
+                  </LineChart>
                 </ResponsiveContainer>
               </div>
             )}

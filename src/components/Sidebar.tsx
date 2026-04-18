@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { IconChevronLeft, IconChevronRight, IconDownload, IconLayoutDashboard, IconLogout, IconPlus, IconUpload } from "@tabler/icons-react";
 import { LogoMark } from "./LogoMark";
 import { MONTHS } from "../constants";
@@ -12,15 +11,16 @@ interface Props {
   setMonths: (data: MonthsMap) => void;
   view: View;
   setView: (v: View) => void;
+  viewYear: number;
+  setViewYear: (fn: (y: number) => number) => void;
   onAddMonth: (year: number, month: number) => void;
   onReplaceAll: (data: MonthsMap) => Promise<void>;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function Sidebar({ months, setMonths, view, setView, onAddMonth, onReplaceAll, isOpen, onClose }: Props) {
+export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYear, onAddMonth, onReplaceAll, isOpen, onClose }: Props) {
   const { user, logout } = useAuth();
-  const [viewYear, setViewYear] = useState(view.year ?? new Date().getFullYear());
   const years = getYears(months);
   const monthsInYear = getMonthsForYear(months, viewYear);
 

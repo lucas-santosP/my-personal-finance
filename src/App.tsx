@@ -14,6 +14,7 @@ export default function App() {
   const [dataLoading, setDataLoading] = useState(false);
   const [view, setView] = useState<View>({ page: "dashboard" });
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [viewYear, setViewYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     if (!user) {
@@ -68,6 +69,8 @@ export default function App() {
         setMonths={setMonths}
         view={view}
         setView={setView}
+        viewYear={viewYear}
+        setViewYear={setViewYear}
         onAddMonth={handleAddMonth}
         onReplaceAll={handleReplaceAll}
         isOpen={sidebarOpen}
@@ -89,7 +92,7 @@ export default function App() {
           </div>
         ) : (
           <>
-            {view.page === "dashboard" && <DashboardPage months={months} setView={setView} onOpenSidebar={() => setSidebarOpen(true)} />}
+            {view.page === "dashboard" && <DashboardPage months={months} setView={setView} viewYear={viewYear} onOpenSidebar={() => setSidebarOpen(true)} />}
             {view.page === "month" && view.year !== undefined && view.month !== undefined && (
               <MonthPage
                 key={`${view.year}-${view.month}`}
