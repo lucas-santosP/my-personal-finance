@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IconCopy, IconMenu2, IconTrash } from "@tabler/icons-react";
 import { MONTHS } from "../constants";
-import { calcMonth, emptyMonth, mkId, monthKey } from "../utils/finance";
+import { calcMonth, emptyMonth, fmt, mkId, monthKey } from "../utils/finance";
 import { saveMonth, deleteMonthDoc } from "../utils/storage";
 import { EntryModal } from "./EntryModal";
 import { TableHeader } from "./TableHeader";
@@ -86,7 +86,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
   const totalEntries = data.income.length + data.expenses.length;
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col h-auto overflow-y-auto md:h-full md:overflow-hidden">
       {/* Header */}
       <div className="bg-white border-b border-neutral-200 flex-shrink-0">
         <div className="flex items-center justify-between px-4 md:px-6 pt-5 pb-0 gap-3">
@@ -163,11 +163,11 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
       </div>
 
       {/* Tables — desktop: fixed split layout; mobile: scrollable */}
-      <div className="flex-1 min-h-0 flex flex-col gap-3 p-4 md:px-6 overflow-y-auto md:overflow-hidden">
+      <div className="flex flex-col gap-3 p-4 md:flex-1 md:min-h-0 md:px-6 md:overflow-hidden">
         {/* Income */}
-        <div className="flex flex-col min-h-0 flex-shrink-0 md:max-h-[35%] bg-white rounded-md border border-neutral-200 overflow-hidden">
+        <div className="flex flex-col md:min-h-0 md:flex-shrink-0 md:max-h-[35%] bg-white rounded-md border border-neutral-200 overflow-hidden">
           <TableHeader section="income" entries={data.income} onAdd={() => setModal({ open: true, section: "income", entry: null })} />
-          <div className="overflow-auto flex-1">
+          <div className="md:overflow-auto md:flex-1">
             <TableBody
               section="income"
               entries={data.income}
@@ -178,12 +178,16 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
               onToggle={(id) => togglePaid("income", id)}
             />
           </div>
+          <div className="px-4 py-2.5 bg-neutral-50 border-t border-neutral-200 flex items-center justify-between flex-shrink-0">
+            <span className="text-xs text-neutral-500 font-medium">Total income</span>
+            <span className="text-sm font-medium">{fmt(totalIncome)}</span>
+          </div>
         </div>
 
         {/* Expenses */}
-        <div className="flex flex-col min-h-0 md:flex-1 bg-white rounded-md border border-neutral-200 overflow-hidden">
+        <div className="flex flex-col md:min-h-0 md:flex-1 bg-white rounded-md border border-neutral-200 overflow-hidden">
           <TableHeader section="expenses" entries={data.expenses} onAdd={() => setModal({ open: true, section: "expenses", entry: null })} />
-          <div className="overflow-auto flex-1">
+          <div className="md:overflow-auto md:flex-1">
             <TableBody
               section="expenses"
               entries={data.expenses}
@@ -193,6 +197,10 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
               onDelete={(id) => deleteEntry("expenses", id)}
               onToggle={(id) => togglePaid("expenses", id)}
             />
+          </div>
+          <div className="px-4 py-2.5 bg-neutral-50 border-t border-neutral-200 flex items-center justify-between flex-shrink-0">
+            <span className="text-xs text-neutral-500 font-medium">Total expenses</span>
+            <span className="text-sm font-medium">{fmt(totalExpenses)}</span>
           </div>
         </div>
 

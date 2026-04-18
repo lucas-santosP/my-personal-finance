@@ -69,7 +69,6 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
   }
 
   const rows = sortEntries(entries, sortField, sortDir);
-  const total = entries.reduce((s, e) => s + Number(e.value || 0), 0);
   const today = new Date().getDate();
   const isCurrentMonth = new Date().getFullYear() === year && new Date().getMonth() + 1 === month;
 
@@ -138,10 +137,6 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
             </div>
           );
         })}
-        <div className="px-4 py-2.5 bg-neutral-50 border-t border-neutral-200 flex items-center justify-between">
-          <span className="text-xs text-neutral-500 font-medium">Total {isIncome ? "income" : "expenses"}</span>
-          <span className="text-sm font-medium">{fmt(total)}</span>
-        </div>
       </div>
 
       {/* ── Desktop: table ──────────────────────────────────────── */}
@@ -156,7 +151,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
           <col style={{ width: "12%" }} />
         </colgroup>
         <thead>
-          <tr className="sticky top-0 bg-white z-10">
+          <tr className="sticky top-0 bg-white z-10 shadow-[0_1px_0_0_theme(colors.neutral.200)]">
             {(
               [
                 { label: "Description", field: "description" as SortField },
@@ -237,16 +232,6 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          <tr className="bg-neutral-50 border-t border-neutral-200">
-            <td colSpan={4} className="px-3 py-2 text-xs text-neutral-500 font-medium">
-              Total {isIncome ? "income" : "expenses"}
-            </td>
-            <td colSpan={3} className="px-3 py-2 text-right text-sm font-medium">
-              {fmt(total)}
-            </td>
-          </tr>
-        </tfoot>
       </table>
     </>
   );
