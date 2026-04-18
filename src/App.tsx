@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { useAuth } from "./contexts/AuthContext";
 import { AuthPage } from "./components/AuthPage";
 import { Sidebar } from "./components/Sidebar";
@@ -68,29 +69,36 @@ export default function App() {
         onClose={() => setSidebarOpen(false)}
       />
 
-      <main
-        className="flex-1 min-w-0 overflow-hidden flex flex-col"
-      >
+      <main className="flex-1 min-w-0 overflow-hidden flex flex-col relative z-0">
         {dataLoading ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="w-5 h-5 rounded-full border-2 border-neutral-300 border-t-neutral-700 animate-spin" />
           </div>
         ) : (
-          <>
-            {view.page === "dashboard" && <DashboardPage months={months} setView={setView} viewYear={viewYear} onOpenSidebar={() => setSidebarOpen(true)} />}
-            {view.page === "month" && view.year !== undefined && view.month !== undefined && (
-              <MonthPage
-                key={`${view.year}-${view.month}`}
-                uid={user.uid}
-                year={view.year}
-                month={view.month}
-                months={months}
-                setMonths={setMonths}
-                setView={setView}
-                onOpenSidebar={() => setSidebarOpen(true)}
-              />
-            )}
-          </>
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.div
+              key={`${view.page}-${view.year}-${view.month}`}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, transition: { duration: 0.4, ease: "easeOut" } }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2, ease: "easeIn" } }}
+              className="flex-1 min-h-0 flex flex-col"
+            >
+              {view.page === "dashboard" && (
+                <DashboardPage months={months} setView={setView} viewYear={viewYear} onOpenSidebar={() => setSidebarOpen(true)} />
+              )}
+              {view.page === "month" && view.year !== undefined && view.month !== undefined && (
+                <MonthPage
+                  uid={user.uid}
+                  year={view.year}
+                  month={view.month}
+                  months={months}
+                  setMonths={setMonths}
+                  setView={setView}
+                  onOpenSidebar={() => setSidebarOpen(true)}
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
         )}
       </main>
     </div>
