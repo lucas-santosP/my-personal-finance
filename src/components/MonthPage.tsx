@@ -87,7 +87,6 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
 
   return (
     <div className="flex flex-col h-auto overflow-y-auto md:h-full md:overflow-hidden">
-      {/* Header */}
       <div className="bg-white border-b border-neutral-200 flex-shrink-0">
         <div className="flex items-center justify-between px-4 md:px-6 pt-5 pb-0 gap-3">
           <div className="flex items-center gap-2 min-w-0">
@@ -125,7 +124,6 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
           </div>
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 border-t border-neutral-200 mt-4">
           {[
             { label: "Income", value: totalIncome, cls: "text-green-800" },
@@ -162,9 +160,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
         </div>
       </div>
 
-      {/* Tables — desktop: fixed split layout; mobile: scrollable */}
       <div className="flex flex-col gap-3 p-4 md:flex-1 md:min-h-0 md:px-6 md:overflow-hidden">
-        {/* Income */}
         <div className="flex flex-col md:min-h-0 md:flex-shrink-0 md:max-h-[35%] bg-white rounded-md border border-neutral-200 overflow-hidden">
           <TableHeader section="income" entries={data.income} onAdd={() => setModal({ open: true, section: "income", entry: null })} />
           <div className="md:overflow-auto md:flex-1">
@@ -184,7 +180,6 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
           </div>
         </div>
 
-        {/* Expenses */}
         <div className="flex flex-col md:min-h-0 md:flex-1 bg-white rounded-md border border-neutral-200 overflow-hidden">
           <TableHeader section="expenses" entries={data.expenses} onAdd={() => setModal({ open: true, section: "expenses", entry: null })} />
           <div className="md:overflow-auto md:flex-1">
@@ -204,7 +199,6 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
           </div>
         </div>
 
-        {/* Spending rate */}
         {totalIncome > 0 && (
           <div className="flex-shrink-0 bg-white rounded-md border border-neutral-200 px-5 py-4">
             <div className="flex justify-between items-center mb-2">

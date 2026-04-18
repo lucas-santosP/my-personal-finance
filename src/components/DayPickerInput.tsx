@@ -8,7 +8,7 @@ const POPOVER_H = 290;
 interface Props {
   year: number;
   month: number; // 1-12
-  value: number | null; // day 1-31
+  value: number | null; // 1-31
   onChange: (day: number | null) => void;
   placeholder?: string;
   className?: string;

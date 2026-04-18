@@ -53,7 +53,6 @@ export default function App() {
 
   return (
     <div className="flex h-screen overflow-hidden font-sans bg-neutral-100">
-      {/* Mobile backdrop */}
       {sidebarOpen && <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
 
       <Sidebar

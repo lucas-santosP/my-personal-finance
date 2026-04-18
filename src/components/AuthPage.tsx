@@ -72,7 +72,6 @@ export function AuthPage() {
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <LogoMark size={48} />
           <p className="mt-3 text-base font-semibold tracking-tight text-neutral-900">My Finances</p>
@@ -82,7 +81,6 @@ export function AuthPage() {
         </div>
 
         <div className="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm">
-          {/* Google */}
           {mode !== "reset" && (
             <>
               <button
@@ -145,7 +143,6 @@ export function AuthPage() {
           </form>
         </div>
 
-        {/* Footer links */}
         <div className="mt-4 text-center flex flex-col gap-2">
           {mode === "signin" && (
             <>

@@ -71,7 +71,6 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
       <div
         className="bg-white rounded-t-2xl md:rounded-md border border-neutral-200 w-full md:max-w-md flex flex-col max-h-[92dvh] overflow-y-auto"
       >
-        {/* Drag handle (mobile only) */}
         <div className="md:hidden flex justify-center pt-3 pb-1 flex-shrink-0">
           <div className="w-8 h-1 rounded-full bg-neutral-300" />
         </div>

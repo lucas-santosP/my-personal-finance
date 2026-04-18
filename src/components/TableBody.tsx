@@ -76,13 +76,11 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
 
   return (
     <>
-      {/* ── Mobile: card list ───────────────────────────────────── */}
       <div className="md:hidden">
         {rows.map((e) => {
           const overdue = !isIncome && isCurrentMonth && e.dueDay && Number(e.dueDay) < today;
           return (
             <div key={e.id} className="px-4 py-3 border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
-              {/* Top row: description + paid toggle */}
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium truncate">{e.description}</p>
@@ -103,7 +101,6 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
                 </button>
               </div>
 
-              {/* Bottom row: meta + value + actions */}
               <div className="flex items-center justify-between mt-2 gap-2">
                 <div className="flex items-center gap-1.5 flex-wrap min-w-0">
                   <span
@@ -139,7 +136,6 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
         })}
       </div>
 
-      {/* ── Desktop: table ──────────────────────────────────────── */}
       <table className="hidden md:table w-full border-collapse table-fixed min-w-[520px]">
         <colgroup>
           <col className="w-[28%]" />

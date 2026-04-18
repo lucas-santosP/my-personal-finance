@@ -72,7 +72,6 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      {/* Header */}
       <div className="bg-white border-b border-neutral-200 flex-shrink-0 px-4 md:px-6 py-5">
         <div className="flex items-center gap-2">
           <button
@@ -97,7 +96,6 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
           </div>
         ) : (
           <>
-            {/* Stats — 2 cols on mobile, 4 on md+ */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
                 { label: "Total income", value: fmt(yearStats.income), cls: "text-green-800" },
@@ -116,7 +114,6 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
               ))}
             </div>
 
-            {/* Chart */}
             {monthsInYear.length > 0 && (
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-3">
                 <p className="text-xs font-medium text-neutral-500 mb-3">Monthly income vs expenses — {currentYear}</p>
@@ -140,7 +137,6 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
               </div>
             )}
 
-            {/* Bottom panels — 1 col on mobile, 2 on md+ */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-4">
                 <p className="text-xs font-medium text-neutral-500 mb-3">Expenses by category — {currentYear}</p>

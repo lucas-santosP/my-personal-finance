@@ -61,7 +61,6 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
         "md:relative md:inset-auto md:translate-x-0 md:z-auto md:flex-shrink-0",
       ].join(" ")}
     >
-      {/* Header */}
       <div className="flex justify-between px-4 py-4 border-b border-neutral-200">
         <div className="flex items-center gap-2 mb-0.5">
           <LogoMark size={32} />
@@ -99,7 +98,6 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
         </div>
       </div>
 
-      {/* Navigation */}
       <div className="px-2 pt-3 pb-1">
         <button
           onClick={() => navigate({ page: "dashboard" })}
@@ -118,7 +116,6 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
         Months
       </p>
 
-      {/* Month list */}
       <div className="flex-1 overflow-y-auto pb-2">
         {monthsInYear.length === 0 && <p className="px-4 py-3 text-xs text-neutral-500">No months yet.</p>}
         {monthsInYear.map((m) => {
@@ -138,7 +135,6 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
         })}
       </div>
 
-      {/* Footer actions */}
       <div className="border-t border-neutral-200 p-2.5 flex flex-col gap-1.5">
         <button
           onClick={handleAdd}
@@ -164,7 +160,6 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
           </button>
         </div>
 
-        {/* User profile */}
         <div className="flex items-center gap-2.5 px-2 pt-1.5 mt-0.5 border-t border-neutral-100">
           <div className="w-7 h-7 rounded-full bg-neutral-200 flex items-center justify-center text-xs font-semibold text-neutral-600 uppercase flex-shrink-0">
             {user?.photoURL ? (
