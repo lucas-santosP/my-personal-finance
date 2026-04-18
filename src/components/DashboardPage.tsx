@@ -90,12 +90,6 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 md:px-6 py-5 flex flex-col gap-4">
-        {monthsInYear.length === 0 ? (
-          <div className="bg-white rounded-md border border-neutral-200 p-12 text-center text-neutral-500 text-sm">
-            No data yet. Add a month from the sidebar to get started.
-          </div>
-        ) : (
-          <>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
                 { label: "Total income", value: fmt(yearStats.income), cls: "text-green-800" },
@@ -114,7 +108,12 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
               ))}
             </div>
 
-            {monthsInYear.length > 0 && (
+        {monthsInYear.length === 0 && (
+          <div className="bg-amber-50 border border-amber-200 rounded-md px-4 py-3 text-sm text-amber-800">
+            No data for {currentYear}. Add a month from the sidebar to get started.
+          </div>
+        )}
+
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-3">
                 <p className="text-xs font-medium text-neutral-500 mb-3">Monthly income vs expenses — {currentYear}</p>
                 <ResponsiveContainer width="100%" height={240}>
@@ -126,7 +125,7 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
                       axisLine={false}
                       tickLine={false}
                       tickCount={4}
-                      domain={[chartMin, chartMax]}
+                      domain={chartValues.length > 0 ? [chartMin, chartMax] : [0, 1000]}
                       tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}k`}
                     />
                     <Tooltip content={<Tip />} />
@@ -135,7 +134,6 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
                   </LineChart>
                 </ResponsiveContainer>
               </div>
-            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-4">
@@ -156,6 +154,9 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
               </div>
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-2">
                 <p className="text-xs font-medium text-neutral-500 mb-3">Monthly summary — {currentYear}</p>
+                {monthsInYear.length === 0 && (
+                  <p className="text-sm text-neutral-500 py-2">No months tracked yet.</p>
+                )}
                 {monthsInYear.map((m) => {
                   const { balance, totalIncome, totalExpenses } = calcMonth(months[monthKey(currentYear, m)]);
                   return (
@@ -178,8 +179,6 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
                 })}
               </div>
             </div>
-          </>
-        )}
       </div>
     </div>
   );
