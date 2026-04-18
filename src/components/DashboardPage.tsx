@@ -71,7 +71,7 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
   const maxCat = catList[0]?.[1] || 1;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}>
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
       <div className="bg-white border-b border-neutral-200 flex-shrink-0 px-4 md:px-6 py-5">
         <div className="flex items-center gap-2">
@@ -151,7 +151,7 @@ export function DashboardPage({ months, setView, viewYear, onOpenSidebar }: Prop
                     <div key={cat} className="flex items-center gap-2.5 py-1.5">
                       <span className="w-20 text-xs text-neutral-500 truncate">{cat}</span>
                       <div className="flex-1 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: `${(val / maxCat) * 100}%`, background: "#F09595" }} />
+                        <div className="h-full rounded-full bg-[#F09595]" style={{ width: `${(val / maxCat) * 100}%` }} />
                       </div>
                       <span className="w-16 text-right text-xs text-neutral-500">{fmt(val)}</span>
                     </div>

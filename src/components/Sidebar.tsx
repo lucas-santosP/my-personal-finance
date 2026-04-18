@@ -75,8 +75,7 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
                 onAddMonth(viewYear, 1);
                 navigate({ page: "month", year: viewYear, month: 1 });
               }}
-              className="ml-1 flex items-center gap-0.5 text-neutral-500 hover:text-neutral-700 border border-neutral-200 rounded px-1.5 py-1 bg-transparent cursor-pointer"
-              style={{ fontSize: "10px" }}
+              className="ml-1 flex items-center gap-0.5 text-[10px] text-neutral-500 hover:text-neutral-700 border border-neutral-200 rounded px-1.5 py-1 bg-transparent cursor-pointer"
             >
               <IconPlus size={10} />
               year
@@ -88,7 +87,7 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
           >
             <IconChevronLeft size={16} />
           </button>
-          <span className="text-xs text-neutral-500 font-medium text-center" style={{ minWidth: "32px" }}>
+          <span className="text-xs text-neutral-500 font-medium text-center min-w-8">
             {viewYear}
           </span>
           <button
@@ -115,7 +114,7 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
         </button>
       </div>
 
-      <p className="px-4 pt-3 pb-1 text-neutral-500 uppercase tracking-widest" style={{ fontSize: "10px" }}>
+      <p className="px-4 pt-3 pb-1 text-[10px] text-neutral-500 uppercase tracking-widest">
         Months
       </p>
 

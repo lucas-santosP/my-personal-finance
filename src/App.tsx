@@ -52,15 +52,7 @@ export default function App() {
   if (!user) return <AuthPage />;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        overflow: "hidden",
-        fontFamily: "system-ui,-apple-system,sans-serif",
-      }}
-      className="bg-neutral-100"
-    >
+    <div className="flex h-screen overflow-hidden font-sans bg-neutral-100">
       {/* Mobile backdrop */}
       {sidebarOpen && <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
 
@@ -78,13 +70,7 @@ export default function App() {
       />
 
       <main
-        style={{
-          flex: 1,
-          minWidth: 0,
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-        }}
+        className="flex-1 min-w-0 overflow-hidden flex flex-col"
       >
         {dataLoading ? (
           <div className="flex-1 flex items-center justify-center">

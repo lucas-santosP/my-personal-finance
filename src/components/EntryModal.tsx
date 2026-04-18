@@ -69,8 +69,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
-        className="bg-white rounded-t-2xl md:rounded-md border border-neutral-200 w-full md:max-w-md flex flex-col"
-        style={{ maxHeight: "92dvh", overflowY: "auto" }}
+        className="bg-white rounded-t-2xl md:rounded-md border border-neutral-200 w-full md:max-w-md flex flex-col max-h-[92dvh] overflow-y-auto"
       >
         {/* Drag handle (mobile only) */}
         <div className="md:hidden flex justify-center pt-3 pb-1 flex-shrink-0">
@@ -195,7 +194,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
                 form.paid ? "bg-green-100 border-green-300 text-green-700" : "bg-red-50 border-red-200 text-red-300"
               }`}
             >
-              <IconCheck size={12} style={{ opacity: form.paid ? 1 : 0 }} />
+              <IconCheck size={12} className={form.paid ? "opacity-100" : "opacity-0"} />
             </div>
             <span className="text-sm text-neutral-600">Mark as {section === "income" ? "received" : "paid"}</span>
           </div>

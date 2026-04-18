@@ -99,7 +99,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
                         : "bg-red-50 border-red-200 text-red-300 hover:border-red-400"
                   }`}
                 >
-                  <IconCheck size={12} style={{ opacity: e.paid ? 1 : 0 }} />
+                  <IconCheck size={12} className={e.paid ? "opacity-100" : "opacity-0"} />
                 </button>
               </div>
 
@@ -140,15 +140,15 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
       </div>
 
       {/* ── Desktop: table ──────────────────────────────────────── */}
-      <table className="hidden md:table w-full border-collapse" style={{ tableLayout: "fixed", minWidth: "520px" }}>
+      <table className="hidden md:table w-full border-collapse table-fixed min-w-[520px]">
         <colgroup>
-          <col style={{ width: "28%" }} />
-          <col style={{ width: "8%" }} />
-          <col style={{ width: "10%" }} />
-          <col style={{ width: "15%" }} />
-          <col style={{ width: "16%" }} />
-          <col style={{ width: "11%" }} />
-          <col style={{ width: "12%" }} />
+          <col className="w-[28%]" />
+          <col className="w-[8%]" />
+          <col className="w-[10%]" />
+          <col className="w-[15%]" />
+          <col className="w-[16%]" />
+          <col className="w-[11%]" />
+          <col className="w-[12%]" />
         </colgroup>
         <thead>
           <tr className="sticky top-0 bg-white z-10 shadow-[0_1px_0_0_theme(colors.neutral.200)]">
@@ -208,7 +208,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
                         : "bg-red-50 border-red-200 text-red-300 hover:border-red-400"
                   }`}
                 >
-                  <IconCheck size={12} style={{ opacity: e.paid ? 1 : 0 }} />
+                  <IconCheck size={12} className={e.paid ? "opacity-100" : "opacity-0"} />
                 </button>
               </td>
               <td className="px-2 py-2.5 text-right">

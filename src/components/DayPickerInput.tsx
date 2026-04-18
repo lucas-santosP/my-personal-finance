@@ -65,8 +65,8 @@ export function DayPickerInput({ year, month, value, onChange, placeholder = "Pi
         createPortal(
           <div
             ref={popoverRef}
-            style={{ position: "fixed", top: pos.top, left: pos.left, zIndex: 9999 }}
-            className="bg-white border border-neutral-200 rounded-md shadow-lg p-2 w-[250px]"
+            style={{ top: pos.top, left: pos.left }}
+            className="fixed z-[9999] bg-white border border-neutral-200 rounded-md shadow-lg p-2 w-[250px]"
           >
             <DayPicker
               mode="single"
