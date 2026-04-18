@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { DayPicker } from "react-day-picker";
 
-const POPOVER_W = 230;
+const POPOVER_W = 250;
 const POPOVER_H = 290;
 
 interface Props {
@@ -66,7 +66,7 @@ export function DayPickerInput({ year, month, value, onChange, placeholder = "Pi
           <div
             ref={popoverRef}
             style={{ position: "fixed", top: pos.top, left: pos.left, zIndex: 9999 }}
-            className="bg-white border border-neutral-200 rounded-md shadow-lg p-3 w-[230px]"
+            className="bg-white border border-neutral-200 rounded-md shadow-lg p-2 w-[250px]"
           >
             <DayPicker
               mode="single"
@@ -90,8 +90,8 @@ export function DayPickerInput({ year, month, value, onChange, placeholder = "Pi
                 head_row: "",
                 head_cell: "text-center text-[10px] font-medium text-neutral-400 py-1 w-8",
                 row: "",
-                cell: "p-0.5 text-center",
-                day: "w-8 h-8 inline-flex items-center justify-center rounded-md text-xs text-neutral-700 hover:bg-neutral-100 cursor-pointer transition-colors",
+                cell: "p-0 text-center",
+                day: "w-full h-8 inline-flex items-center justify-center rounded-md text-xs text-neutral-700 hover:bg-neutral-100 cursor-pointer transition-colors",
                 day_selected: "bg-neutral-900 text-white hover:bg-neutral-800 font-medium rounded-md",
                 day_today: "text-green-600 font-semibold",
                 day_outside: "opacity-0 pointer-events-none",
