@@ -93,7 +93,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
           <div className="flex items-center gap-2 min-w-0">
             <button
               onClick={onOpenSidebar}
-              className="md:hidden flex-shrink-0 p-1.5 -ml-1 rounded-md text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
+              className="md:hidden flex-shrink-0 p-1.5 -ml-1 rounded-md text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
             >
               <IconMenu2 size={20} />
             </button>
@@ -101,7 +101,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
               <h1 className="text-xl font-medium truncate">
                 {MONTHS[month - 1]} {year}
               </h1>
-              <p className="text-xs text-neutral-400 mt-0.5">
+              <p className="text-xs text-neutral-500 mt-0.5">
                 {allPaid ? "All paid · " : unpaid > 0 ? `${unpaid.toLocaleString("en-US", { style: "currency", currency: "USD" })} unpaid · ` : ""}
                 {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
               </p>
@@ -138,7 +138,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
             {
               label: "Unpaid",
               value: unpaid,
-              cls: unpaid > 0 ? "text-amber-700" : "text-neutral-400",
+              cls: unpaid > 0 ? "text-amber-700" : "text-neutral-500",
             },
           ].map((s, i) => (
             <div
@@ -149,7 +149,7 @@ export function MonthPage({ uid, year, month, months, setMonths, setView, onOpen
                 ${i === 1 ? "md:border-r" : ""}
               `}
             >
-              <p className="text-xs text-neutral-400 mb-1">{s.label}</p>
+              <p className="text-xs text-neutral-500 mb-1">{s.label}</p>
               <p className={`text-base font-medium ${s.cls}`}>
                 {s.value.toLocaleString("en-US", {
                   style: "currency",

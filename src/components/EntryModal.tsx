@@ -81,7 +81,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
           <p className="text-sm font-medium">
             {isEdit ? "Edit" : "Add"} {section === "income" ? "income" : "expense"}
           </p>
-          <button onClick={onClose} className="text-neutral-400 hover:text-neutral-700 p-1 bg-transparent border-none cursor-pointer">
+          <button onClick={onClose} className="text-neutral-500 hover:text-neutral-700 p-1 bg-transparent border-none cursor-pointer">
             <IconX size={16} />
           </button>
         </div>
@@ -133,7 +133,7 @@ export function EntryModal({ section, entry, onSave, onClose, year, month }: Pro
                 {form.dueDay && (
                   <button
                     onClick={() => set("dueDay", "")}
-                    className="px-2.5 py-2 rounded-md border border-neutral-200 text-neutral-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 bg-transparent cursor-pointer transition-colors"
+                    className="px-2.5 py-2 rounded-md border border-neutral-200 text-neutral-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 bg-transparent cursor-pointer transition-colors"
                   >
                     <IconX size={13} />
                   </button>

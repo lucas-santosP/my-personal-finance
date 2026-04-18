@@ -75,7 +75,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, onReplac
                 onAddMonth(viewYear, 1);
                 navigate({ page: "month", year: viewYear, month: 1 });
               }}
-              className="ml-1 flex items-center gap-0.5 text-neutral-400 hover:text-neutral-700 border border-neutral-200 rounded px-1.5 py-1 bg-transparent cursor-pointer"
+              className="ml-1 flex items-center gap-0.5 text-neutral-500 hover:text-neutral-700 border border-neutral-200 rounded px-1.5 py-1 bg-transparent cursor-pointer"
               style={{ fontSize: "10px" }}
             >
               <IconPlus size={10} />
@@ -84,7 +84,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, onReplac
           )}
           <button
             onClick={() => setViewYear((y) => y - 1)}
-            className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
+            className="p-0.5 rounded text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
           >
             <IconChevronLeft size={16} />
           </button>
@@ -93,7 +93,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, onReplac
           </span>
           <button
             onClick={() => setViewYear((y) => y + 1)}
-            className="p-0.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
+            className="p-0.5 rounded text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
           >
             <IconChevronRight size={16} />
           </button>
@@ -115,13 +115,13 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, onReplac
         </button>
       </div>
 
-      <p className="px-4 pt-3 pb-1 text-neutral-400 uppercase tracking-widest" style={{ fontSize: "10px" }}>
+      <p className="px-4 pt-3 pb-1 text-neutral-500 uppercase tracking-widest" style={{ fontSize: "10px" }}>
         Months
       </p>
 
       {/* Month list */}
       <div className="flex-1 overflow-y-auto pb-2">
-        {monthsInYear.length === 0 && <p className="px-4 py-3 text-xs text-neutral-400">No months yet.</p>}
+        {monthsInYear.length === 0 && <p className="px-4 py-3 text-xs text-neutral-500">No months yet.</p>}
         {monthsInYear.map((m) => {
           const active = view.page === "month" && view.year === viewYear && view.month === m;
           return (
@@ -187,7 +187,7 @@ export function Sidebar({ months, setMonths, view, setView, onAddMonth, onReplac
           <button
             onClick={logout}
             title="Sign out"
-            className="flex-shrink-0 p-1.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
+            className="flex-shrink-0 p-1.5 rounded text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
           >
             <IconLogout size={14} />
           </button>

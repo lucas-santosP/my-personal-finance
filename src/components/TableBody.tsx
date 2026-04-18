@@ -72,7 +72,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
   const today = new Date().getDate();
   const isCurrentMonth = new Date().getFullYear() === year && new Date().getMonth() + 1 === month;
 
-  if (rows.length === 0) return <div className="py-10 text-center text-sm text-neutral-400">No {isIncome ? "income" : "expenses"} yet.</div>;
+  if (rows.length === 0) return <div className="py-10 text-center text-sm text-neutral-500">No {isIncome ? "income" : "expenses"} yet.</div>;
 
   return (
     <>
@@ -86,7 +86,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium truncate">{e.description}</p>
-                  {e.note && <p className="text-xs text-neutral-400 truncate mt-0.5">{e.note}</p>}
+                  {e.note && <p className="text-xs text-neutral-500 truncate mt-0.5">{e.note}</p>}
                 </div>
                 <span>{isIncome ? "Received" : "Paid"}</span>
                 <button
@@ -111,7 +111,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
                   >
                     {e.kind}
                   </span>
-                  {e.dueDay && <span className="text-xs text-neutral-400 flex-shrink-0">Day {e.dueDay}</span>}
+                  {e.dueDay && <span className="text-xs text-neutral-500 flex-shrink-0">Day {e.dueDay}</span>}
                   <span className="text-xs px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-500 border border-neutral-200 truncate">
                     {e.category}
                   </span>
@@ -121,14 +121,14 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
                   <button
                     onClick={() => onEdit(e)}
                     title="Edit"
-                    className="p-1.5 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border border-neutral-200 bg-transparent cursor-pointer"
+                    className="p-1.5 rounded text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 border border-neutral-200 bg-transparent cursor-pointer"
                   >
                     <IconPencil size={14} />
                   </button>
                   <button
                     onClick={() => onDelete(e.id)}
                     title="Delete"
-                    className="p-1.5 rounded text-neutral-400 hover:text-red-600 hover:bg-red-50 hover:border-red-200 border border-neutral-200 bg-transparent cursor-pointer"
+                    className="p-1.5 rounded text-neutral-500 hover:text-red-600 hover:bg-red-50 hover:border-red-200 border border-neutral-200 bg-transparent cursor-pointer"
                   >
                     <IconX size={14} />
                   </button>
@@ -165,7 +165,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
             ).map((h, i) => (
               <th
                 key={i}
-                className={`px-3 py-2 font-normal border-b border-neutral-200 text-xs text-neutral-400 ${i >= 4 ? "text-right" : "text-left"} ${h.field ? "cursor-pointer select-none hover:text-neutral-600" : ""}`}
+                className={`px-3 py-2 font-normal border-b border-neutral-200 text-xs text-neutral-500 ${i >= 4 ? "text-right" : "text-left"} ${h.field ? "cursor-pointer select-none hover:text-neutral-600" : ""}`}
                 onClick={h.field ? () => handleSort(h.field!) : undefined}
               >
                 <span className={`inline-flex items-center gap-0.5 ${i >= 4 ? "justify-end" : ""}`}>
@@ -181,7 +181,7 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
             <tr key={e.id} className="group hover:bg-neutral-50 transition-colors border-b border-neutral-100">
               <td className="px-3 py-2.5">
                 <p className="text-sm font-medium truncate">{e.description}</p>
-                {e.note && <p className="text-xs text-neutral-400 truncate">{e.note}</p>}
+                {e.note && <p className="text-xs text-neutral-500 truncate">{e.note}</p>}
               </td>
               <td className="px-3 py-2.5">
                 <span
@@ -216,14 +216,14 @@ export function TableBody({ section, entries, year, month, onEdit, onDelete, onT
                   <button
                     onClick={() => onEdit(e)}
                     title="Edit"
-                    className="p-2 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border border-neutral-200 bg-transparent cursor-pointer"
+                    className="p-2 rounded text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 border border-neutral-200 bg-transparent cursor-pointer"
                   >
                     <IconPencil size={14} />
                   </button>
                   <button
                     onClick={() => onDelete(e.id)}
                     title="Delete"
-                    className="p-2 rounded text-neutral-400 hover:text-red-600 hover:bg-red-50 hover:border-red-200 border border-neutral-200 bg-transparent cursor-pointer"
+                    className="p-2 rounded text-neutral-500 hover:text-red-600 hover:bg-red-50 hover:border-red-200 border border-neutral-200 bg-transparent cursor-pointer"
                   >
                     <IconX size={14} />
                   </button>

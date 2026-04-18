@@ -71,13 +71,13 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenSidebar}
-            className="md:hidden p-1.5 -ml-1 rounded-md text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
+            className="md:hidden p-1.5 -ml-1 rounded-md text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 border-none bg-transparent cursor-pointer"
           >
             <IconMenu2 size={20} />
           </button>
           <div>
             <h1 className="text-xl font-medium">Dashboard</h1>
-            <p className="text-xs text-neutral-400 mt-0.5">
+            <p className="text-xs text-neutral-500 mt-0.5">
               {currentYear} overview · {yearStats.months} months tracked
             </p>
           </div>
@@ -86,7 +86,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
 
       <div className="flex-1 overflow-y-auto px-4 md:px-6 py-5 flex flex-col gap-4">
         {years.length === 0 ? (
-          <div className="bg-white rounded-md border border-neutral-200 p-12 text-center text-neutral-400 text-sm">
+          <div className="bg-white rounded-md border border-neutral-200 p-12 text-center text-neutral-500 text-sm">
             No data yet. Add a month from the sidebar to get started.
           </div>
         ) : (
@@ -104,7 +104,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
                 { label: "Months tracked", value: yearStats.months, cls: "text-neutral-800" },
               ].map((s, i) => (
                 <div key={i} className="bg-white rounded-md border border-neutral-200 px-4 py-3.5">
-                  <p className="text-xs text-neutral-400 mb-1.5">{s.label}</p>
+                  <p className="text-xs text-neutral-500 mb-1.5">{s.label}</p>
                   <p className={`text-lg font-medium ${s.cls}`}>{s.value}</p>
                 </div>
               ))}
@@ -137,7 +137,7 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
               <div className="bg-white rounded-md border border-neutral-200 px-5 pt-4 pb-4">
                 <p className="text-xs font-medium text-neutral-500 mb-3">Expenses by category — {currentYear}</p>
                 {catList.length === 0 ? (
-                  <p className="text-sm text-neutral-400">No expense data yet.</p>
+                  <p className="text-sm text-neutral-500">No expense data yet.</p>
                 ) : (
                   catList.map(([cat, val]) => (
                     <div key={cat} className="flex items-center gap-2.5 py-1.5">
@@ -162,8 +162,8 @@ export function DashboardPage({ months, setView, onOpenSidebar }: Props) {
                     >
                       <span className="text-sm text-neutral-700">{MONTHS[m - 1]}</span>
                       <div className="flex items-center gap-2">
-                        <span className="hidden sm:inline text-xs text-neutral-400">{fmt(totalIncome)} in</span>
-                        <span className="hidden sm:inline text-xs text-neutral-400">{fmt(totalExpenses)} out</span>
+                        <span className="hidden sm:inline text-xs text-neutral-500">{fmt(totalIncome)} in</span>
+                        <span className="hidden sm:inline text-xs text-neutral-500">{fmt(totalExpenses)} out</span>
                         <span className={`text-xs font-medium w-16 text-right ${balance >= 0 ? "text-green-800" : "text-red-700"}`}>
                           {balance >= 0 ? "+" : ""}
                           {fmt(balance)}

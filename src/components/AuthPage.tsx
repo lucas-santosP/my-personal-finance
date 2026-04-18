@@ -76,7 +76,7 @@ export function AuthPage() {
         <div className="flex flex-col items-center mb-8">
           <LogoMark size={48} />
           <p className="mt-3 text-base font-semibold tracking-tight text-neutral-900">My Finances</p>
-          <p className="text-sm text-neutral-400 mt-0.5">
+          <p className="text-sm text-neutral-500 mt-0.5">
             {mode === "signin" ? "Sign in to your account" : mode === "signup" ? "Create a new account" : "Reset your password"}
           </p>
         </div>
@@ -96,7 +96,7 @@ export function AuthPage() {
 
               <div className="flex items-center gap-3 my-4">
                 <div className="flex-1 h-px bg-neutral-200" />
-                <span className="text-xs text-neutral-400">or</span>
+                <span className="text-xs text-neutral-500">or</span>
                 <div className="flex-1 h-px bg-neutral-200" />
               </div>
             </>
@@ -163,7 +163,7 @@ export function AuthPage() {
                   setMode("reset");
                   clear();
                 }}
-                className="text-xs text-neutral-400 hover:text-neutral-600 bg-transparent border-none cursor-pointer"
+                className="text-xs text-neutral-500 hover:text-neutral-600 bg-transparent border-none cursor-pointer"
               >
                 Forgot password?
               </button>
