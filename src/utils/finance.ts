@@ -18,8 +18,9 @@ export function calcMonth(d: MonthData) {
   const totalExpenses = d.expenses.reduce((s, e) => s + Number(e.value || 0), 0);
   const balance = totalIncome - totalExpenses;
   const unpaid = d.expenses.filter((e) => !e.paid).reduce((s, e) => s + Number(e.value || 0), 0);
+  const unreceived = d.income.filter((e) => !e.paid).reduce((s, e) => s + Number(e.value || 0), 0);
   const pct = totalIncome > 0 ? Math.round((totalExpenses / totalIncome) * 100) : 0;
-  return { totalIncome, totalExpenses, balance, unpaid, pct };
+  return { totalIncome, totalExpenses, balance, unpaid, unreceived, pct };
 }
 
 export function getYears(months: Record<string, MonthData>): number[] {

@@ -36,6 +36,12 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
     return balance > 0 ? "bg-green-600" : balance < 0 ? "bg-red-500" : "bg-neutral-300";
   };
 
+  const pendingCount = (y: number, m: number) => {
+    const d = months[monthKey(y, m)];
+    if (!d) return 0;
+    return d.expenses.filter((e) => !e.paid).length + d.income.filter((e) => !e.paid).length;
+  };
+
   const handleAdd = () => {
     const existing = new Set(monthsInYear);
     let target: number | null = null;
@@ -86,9 +92,7 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
           >
             <IconChevronLeft size={16} />
           </button>
-          <span className="text-xs text-neutral-500 font-medium text-center min-w-8">
-            {viewYear}
-          </span>
+          <span className="text-xs text-neutral-500 font-medium text-center min-w-8">{viewYear}</span>
           <button
             onClick={() => setViewYear((y) => y + 1)}
             className="p-0.5 rounded text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 bg-transparent border-none cursor-pointer"
@@ -112,9 +116,7 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
         </button>
       </div>
 
-      <p className="px-4 pt-3 pb-1 text-[10px] text-neutral-500 uppercase tracking-widest">
-        Months
-      </p>
+      <p className="px-4 pt-3 pb-1 text-[10px] text-neutral-500 uppercase tracking-widest">Months</p>
 
       <div className="flex-1 overflow-y-auto pb-2">
         {monthsInYear.length === 0 && <p className="px-4 py-3 text-xs text-neutral-500">No months yet.</p>}
@@ -129,7 +131,14 @@ export function Sidebar({ months, setMonths, view, setView, viewYear, setViewYea
               }`}
             >
               <span>{MONTHS[m - 1]}</span>
-              <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColor(viewYear, m)}`} />
+              <span className="flex items-center gap-2">
+                {pendingCount(viewYear, m) > 0 && (
+                  <span className="text-[10px] font-medium leading-none min-w-4 text-center px-1.5 py-0.5 rounded-full text-white bg-red-600">
+                    {pendingCount(viewYear, m)}
+                  </span>
+                )}
+                <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColor(viewYear, m)}`} />
+              </span>
             </button>
           );
         })}
